@@ -2,7 +2,6 @@ package redfive.software.blackpearltwo.resource;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 
 @NoArgsConstructor
@@ -20,10 +19,21 @@ public class Resource {
 
     private String url;
 
-
     public Resource(Long id, String title, String url) {
         this.id = id;
         this.title = title;
         this.url = url;
     }
+
+    public Resource(String title, String url) {
+        this.title = title;
+        this.url = url;
+    }
+
+    public Resource(ResourceJson resourceJson) {
+        this.id = resourceJson.getId();
+        this.title = resourceJson.getTitle();
+        this.url = resourceJson.getUrl();
+    }
+
 }
