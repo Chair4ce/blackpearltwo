@@ -1,6 +1,27 @@
+graphql:
+  servlet:
+    mapping: /api/graphql
+    enabled: true
+    corsEnabled: true
+graphiql:
+  mapping: /graphiql
+  endpoint:
+    graphql: /api/graphql
+    subscriptions: /subscriptions
+  subscriptions:
+    timeout: 30
+    reconnect: false
+  static:
+    basePath: /
+  enabled: true
+  pageTitle: GraphiQL
+  cdn:
+    enabled: false
+    version: 0.13.0
+  props:
+    variables:
+      editorTheme: "solarized light"
 spring:
-  main:
-    banner-mode: "off"
   datasource:
     url: jdbc:h2:mem:bpdev;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     username: sa
@@ -9,7 +30,4 @@ spring:
     platform: h2
   flyway:
     enabled: false
-logging:
-  level:
-    root: OFF
-    org.springframework: OFF
+

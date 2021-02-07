@@ -1,0 +1,13 @@
+---
+applications:
+- name: Blackpearltwo
+  buildpacks:
+    - https://github.com/cloudfoundry/java-buildpack.git
+  memory: 1GB
+  instances: 1
+  stack: cflinuxfs3
+  services:
+    - blackpearltwodb
+  path: blackpearltwo.jar
+
+
