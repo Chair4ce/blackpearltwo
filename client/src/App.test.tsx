@@ -1,9 +1,18 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import React from 'react'
+import { render } from '@testing-library/react'
+import App from './App'
+import { ApolloProvider } from '@apollo/client'
+import client from './apolloClient'
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
-});
+function renderMainView() {
+  return render(
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
+  )
+}
+test('renders app', async () => {
+  const { findByTestId } = renderMainView()
+  const app = await findByTestId('app')
+  expect(app).toBeTruthy()
+})

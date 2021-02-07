@@ -31,7 +31,7 @@ class App extends React.Component {
         ) : this.state.data && this.state.data !== undefined ? (
           <div>
             {this.state.data.map((resource: any) => (
-              <div data-testid={'site-row'} className={'dataRow'} key={resource.id}>
+              <div data-testid={'resource-row'} className={'dataRow'} key={resource.id}>
                 {' '}
                 <p>
                   {resource.title} : {resource.url}
