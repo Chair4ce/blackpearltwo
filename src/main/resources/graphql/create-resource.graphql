@@ -1,0 +1,6 @@
+mutation {
+    createResource(title: "Facebook", url: "facebook.com"){
+        title
+        url
+    }
+}

@@ -1,0 +1,7 @@
+mutation {
+    updateResource(id: 1, title: "Instagram", url: "facebook.com"){
+        id
+        title
+        url
+    }
+}

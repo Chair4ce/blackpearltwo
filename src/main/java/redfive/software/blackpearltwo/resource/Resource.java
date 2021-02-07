@@ -11,7 +11,7 @@ import javax.persistence.*;
 public class Resource {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private Long id;
 
@@ -28,12 +28,6 @@ public class Resource {
     public Resource(String title, String url) {
         this.title = title;
         this.url = url;
-    }
-
-    public Resource(ResourceJson resourceJson) {
-        this.id = resourceJson.getId();
-        this.title = resourceJson.getTitle();
-        this.url = resourceJson.getUrl();
     }
 
 }

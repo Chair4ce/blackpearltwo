@@ -1,0 +1,7 @@
+query {
+    resource(id: 2) {
+        id
+        title
+        url
+    }
+}
