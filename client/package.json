@@ -67,8 +67,9 @@
     ]
   },
   "devDependencies": {
-    "prettier": "^2.2.1",
     "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.6"
+    "enzyme-adapter-react-16": "^1.15.6",
+    "prettier": "^2.2.1",
+    "@types/classnames": "^2.2.11"
   }
 }
