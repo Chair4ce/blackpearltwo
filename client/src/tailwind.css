@@ -2,8 +2,91 @@
 @tailwind components;
 @tailwind utilities;
 
-.root {
-    background: #2F2A2A;
-    height: 100%;
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.root {
+  background: #2f2a2a;
+  height: 100%;
+}
+
+/*//Resource Column*/
+/*---------------------------------------------------------*/
+.candyBarWrapper {
+  background: #373f51;
+  height: 32px;
+  width: 100%;
+  margin: 2px 0 2px 0;
+  border-radius: 3px;
+}
+.candyBarWrapper a {
+  width: 100%;
+  height: 100%;
+}
+
+.candyBarWrapper:hover {
+  background: #464646;
+}
+
+.candyBarWrapper:active {
+  background: #5f5f5f;
+}
+
+.candyBarInfo {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+}
+
+.candyBarInfo h2 {
+  font-weight: bold;
+  color: white;
+}
+
+.candyBarInfocon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+}
+
+.resourceColumnHeader {
+  height: 40px;
+  width: 100%;
+}
+
+.resourceColumnHeader h2 {
+  font-weight: bold;
+  text-align: center;
+  font-size: 24px;
+  line-height: 40px;
+  height: 100%;
+  color: white;
+}
+
+.resourceColumn {
+  display: flex;
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: start;
+  background: #1b1b1e;
+  border-radius: 3px;
+  width: 318px;
+  height: 752px;
+  padding: 2px 4px 2px 4px;
+}
+
+/*--------------------------------------------------*/

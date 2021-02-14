@@ -1,5 +1,4 @@
 import React from 'react'
-import './App.css'
 import ResourceModel from './store/site/ResourceModel'
 import client from './apolloClient'
 import { FETCH_RESOURCES } from './store/site/Queries/FETCH_RESOURCES'
@@ -24,20 +23,25 @@ class App extends React.Component {
   }
   render() {
     return (
-      <div data-testid="app" className="App">
-        {this.state.loading ? (
-          <p>Loading... </p>
-        ) : this.state.errors ? (
-          <p>Uh oh!</p>
-        ) : this.state.data && this.state.data !== undefined ? (
-          <div>
-            {this.state.data.map((resource: any) => (
-              <ResourceCandyBar>
-                <CandyBarInfo status={false} title={resource.title} url={resource.url} />
-              </ResourceCandyBar>
-            ))}
+      <div data-testid="App" className={'app'}>
+        <div className={'resourceColumn'}>
+          <div className={'resourceColumnHeader'}>
+            <h2>Main</h2>
           </div>
-        ) : null}
+          {this.state.loading ? (
+            <p>Loading... </p>
+          ) : this.state.errors ? (
+            <p>Uh oh!</p>
+          ) : this.state.data ? (
+            <div>
+              {this.state.data.map((resource: any) => (
+                <ResourceCandyBar key={resource.id} url={resource.url} name={resource.title}>
+                  <CandyBarInfo status={true} title={resource.title} url={resource.url} />
+                </ResourceCandyBar>
+              ))}
+            </div>
+          ) : null}
+        </div>
       </div>
     )
   }

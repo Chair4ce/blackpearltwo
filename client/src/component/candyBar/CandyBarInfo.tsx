@@ -12,10 +12,10 @@ export interface Props {
 const CandyBarInfo: React.FC<Props> = (props) => {
   return (
     <div data-testid="CandyBarInfo" className={classNames(props.className, 'candyBarInfo')}>
-      <div data-testid="Info-row" className={classNames('info-Row')}>
+      <div className={'candyBarInfocon'}>
         <GlobeIcon status={props.status} />
-        <span>{props.title}</span>
       </div>
+      <h2>{props.title}</h2>
     </div>
   )
 }
