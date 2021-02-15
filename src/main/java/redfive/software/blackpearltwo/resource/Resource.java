@@ -19,6 +19,7 @@ public class Resource {
 
     private String url;
 
+
     public Resource(Long id, String title, String url) {
         this.id = id;
         this.title = title;
@@ -29,5 +30,4 @@ public class Resource {
         this.title = title;
         this.url = url;
     }
-
 }

@@ -1,9 +1,18 @@
 package redfive.software.blackpearltwo.resource;
 
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
-
+import com.google.common.net.InternetDomainName;
+import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 
 @Service
@@ -11,6 +20,7 @@ import java.util.List;
 public class ResourceService {
 
     private final ResourceRepository resourceRepository;
+    private final Logger logger = LogManager.getLogger(getClass());
 
     public Resource getResource(Long id) {
         return resourceRepository.getOne(id);
@@ -19,6 +29,8 @@ public class ResourceService {
     public List<Resource> getResources() {
         return resourceRepository.findAll();
     }
+
+
 
     public Resource createResource(String title, String url) {
         Resource resource = new Resource(title, url);
@@ -40,6 +52,65 @@ public class ResourceService {
     public boolean deleteResource(Long id) {
         resourceRepository.deleteById(id);
         return true;
+    }
+
+    public ModelAndView home(String view) {
+        logger.info("Entering home page");
+        ModelAndView model = new ModelAndView("previewLink");
+        model.addObject("title", "Home");
+        model.addObject("view", view);
+        return model;
+    }
+
+    public Link getLinkPreviewInfo(String url) {
+        Link link = null;
+        try {
+            link = extractLinkPreviewInfo(url);
+        } catch (IOException e) {
+            logger.error("Unable to connect to : {}", url);
+        }
+        return link;
+    }
+
+    public ModelAndView linkPreview(String url) {
+        ModelAndView model = new ModelAndView("link");
+        try {
+            model.addObject("link", extractLinkPreviewInfo(url));
+        } catch (IOException e) {
+            logger.error("Unable to connect to : {}", url);
+            model.addObject("css", "danger");
+            model.addObject("msg", "Unable to connect to '" + url + "': " + e.getMessage());
+        }
+        return model;
+    }
+
+    public Link extractLinkPreviewInfo(String url) throws IOException {
+        if (!url.startsWith("http")) {
+            url = "http://" + url;
+        }
+        Document document = Jsoup.connect(url).get();
+        String title = getMetaTagContent(document, "meta[name=title]");
+        String desc = getMetaTagContent(document, "meta[name=description]");
+        String ogUrl = StringUtils.defaultIfBlank(getMetaTagContent(document, "meta[property=og:url]"), url);
+        String ogTitle = getMetaTagContent(document, "meta[property=og:title]");
+        String ogDesc = getMetaTagContent(document, "meta[property=og:description]");
+        String ogImage = getMetaTagContent(document, "meta[property=og:image]");
+        String ogImageAlt = getMetaTagContent(document, "meta[property=og:image:alt]");
+        String domain = ogUrl;
+        try {
+            domain = InternetDomainName.from(new URL(ogUrl).getHost()).topPrivateDomain().toString();
+        } catch (Exception e) {
+            logger.warn("Unable to connect to extract domain name from : {}", url);
+        }
+        return new Link(domain, url, StringUtils.defaultIfBlank(ogTitle, title), StringUtils.defaultIfBlank(ogDesc, desc), ogImage, ogImageAlt);
+    }
+
+    private String getMetaTagContent(Document document, String cssQuery) {
+        Element elm = document.select(cssQuery).first();
+        if (elm != null) {
+            return elm.attr("content");
+        }
+        return "";
     }
 
 }
