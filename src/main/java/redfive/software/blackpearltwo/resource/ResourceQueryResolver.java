@@ -3,6 +3,7 @@ package redfive.software.blackpearltwo.resource;
 import graphql.kickstart.tools.GraphQLQueryResolver;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+import redfive.software.blackpearltwo.linkPreview.Link;
 
 import java.io.IOException;
 import java.util.List;

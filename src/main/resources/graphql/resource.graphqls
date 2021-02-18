@@ -4,23 +4,16 @@ type Resource {
   url: String!
 }
 
-type Link {
-  domain: String!
-  url: String!
-  title: String!
-  desc: String!
-  image: String!
-  imageAlt: String!
-}
+
 
 type Query {
   resource(id: ID!): Resource!
   resources: [Resource]!
-  linkPreview(url: String!): Link!
 }
 
 type Mutation {
-  createResource(title: String!, url: String!): Resource!
+  createResource(title: String!, url: String!): [Resource]!
   updateResource(id: ID!, title: String!, url: String!): Resource!
   deleteResource(id: ID!): Boolean
 }
+

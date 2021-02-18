@@ -1,5 +1,6 @@
 package redfive.software.blackpearltwo.resource;
 
+import com.google.common.net.InternetDomainName;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -9,8 +10,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
+import redfive.software.blackpearltwo.linkPreview.Link;
+import redfive.software.blackpearltwo.linkPreview.LinkRepository;
 
-import com.google.common.net.InternetDomainName;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -20,6 +22,7 @@ import java.util.List;
 public class ResourceService {
 
     private final ResourceRepository resourceRepository;
+    private final LinkRepository linkRepository;
     private final Logger logger = LogManager.getLogger(getClass());
 
     public Resource getResource(Long id) {
@@ -30,21 +33,34 @@ public class ResourceService {
         return resourceRepository.findAll();
     }
 
-
-
-    public Resource createResource(String title, String url) {
+    public Iterable<Resource> createResource(String title, String url) {
         Resource resource = new Resource(title, url);
-        return resourceRepository.save(resource);
+        Link preview = getLinkPreviewInfo(url);
+        linkRepository.save(preview);
+        resourceRepository.save(resource);
+        return resourceRepository.findAll();
+    }
+
+    public void generatePreviews() {
+        List<Resource> links = resourceRepository.findAll();
+        for (Resource link : links) {
+            Link preview = getLinkPreviewInfo(link.getUrl());
+            if ( linkRepository.findByUrl(link.getUrl()) == null) {
+                linkRepository.save(preview);
+            }
+        }
     }
 
     public Resource updateResource(Long id, String title, String url) throws javassist.NotFoundException {
 
         if (resourceRepository.findById(id).isPresent()) {
-        Resource resource = resourceRepository.findById(id).orElseThrow(RuntimeException::new);
-        resource.setTitle(title);
-        resource.setUrl(url);
-        resourceRepository.save(resource);
-        return resource;
+            Resource resource = resourceRepository.findById(id).orElseThrow(RuntimeException::new);
+            resource.setTitle(title);
+            resource.setUrl(url);
+            Link preview = getLinkPreviewInfo(url);
+            linkRepository.save(preview);
+            resourceRepository.save(resource);
+            return resource;
         }
         throw new javassist.NotFoundException("No site to update!");
     }

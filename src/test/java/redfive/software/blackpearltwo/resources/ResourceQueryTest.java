@@ -12,6 +12,7 @@ import redfive.software.blackpearltwo.resource.Resource;
 import redfive.software.blackpearltwo.resource.ResourceService;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -41,18 +42,18 @@ public class ResourceQueryTest extends BaseIntegrationTest {
 
     @Test
     public void createResource() throws IOException {
-        Resource resource = new Resource( "Facebook", "facebook.com");
+        Iterable<Resource> resource = Arrays.asList(new Resource(1L, "Facebook", "facebook.com"), new Resource(2L, "Facebook", "facebook.com"));
         when(resourceServiceMock.createResource(any(), any())).thenReturn(resource);
         GraphQLResponse response = graphQLTestTemplate.postForResource("graphql/create-resource.graphql");
         assertTrue(response.isOk());
-        assertEquals("Facebook", response.get("$.data.createResource.title"));
-        assertEquals("facebook.com", response.get("$.data.createResource.url"));
+        assertEquals("Facebook", response.get("$.data.createResource[0].title"));
+        assertEquals("facebook.com", response.get("$.data.createResource[0].url"));
     }
 
     @Test
     public void updateResource() throws IOException, NotFoundException {
-        Resource resource = new Resource( 1L,"Instagram", "facebook.com");
-        when(resourceServiceMock.updateResource(any() ,any(), any())).thenReturn(resource);
+        Resource resource = new Resource(1L, "Instagram", "facebook.com");
+        when(resourceServiceMock.updateResource(any(), any(), any())).thenReturn(resource);
         GraphQLResponse response = graphQLTestTemplate.postForResource("graphql/update-resource.graphql");
         assertTrue(response.isOk());
         assertEquals("Instagram", response.get("$.data.updateResource.title"));

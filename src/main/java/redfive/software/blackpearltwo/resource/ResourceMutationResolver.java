@@ -9,9 +9,10 @@ import org.springframework.stereotype.Component;
 @Component
 @AllArgsConstructor
 public class ResourceMutationResolver implements GraphQLMutationResolver {
+
     private final ResourceService resourceService;
 
-    public Resource createResource(String title, String url) {
+    public Iterable<Resource> createResource(String title, String url) {
         return resourceService.createResource(title, url);
     }
 
