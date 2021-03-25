@@ -3,22 +3,73 @@ import classNames from 'classnames'
 import ResourceCandyBar from '../candyBar/ResourceCandyBar'
 import CandyBarInfo from '../candyBar/CandyBarInfo'
 import ResourceModel from '../../store/ResourceModel'
-import { ApolloError } from '@apollo/client'
-import { useState } from 'react'
+import { ApolloError, useMutation, useQuery } from '@apollo/client'
+import { ChangeEvent, useReducer, useState } from 'react'
+import { CREATE_RESOURCE } from '../../store/site/Mutations/CREATE_RESOURCE'
+import { gql } from '@apollo/client/core'
+import { FETCH_RESOURCES } from '../../store/site/Queries/FETCH_RESOURCES'
+import { ResourceData } from '../../App'
 
 export interface Props {
-  loading: boolean | null
-  errors: ApolloError | undefined
   title: string
-  data?: ResourceModel[]
   className?: string
 }
 
 const ResourceCard: React.FC<Props> = (props) => {
+  const { loading, error, data } = useQuery<ResourceData>(FETCH_RESOURCES)
+
   const [showAdd, toggleAdd] = useState(false)
+  const [resource, setResource] = useReducer(
+    (state: any, newState: any) => ({ ...state, ...newState }),
+    {
+      title: '',
+      url: '',
+    }
+  )
+
+  const [createResource, { error: mutationError }] = useMutation(CREATE_RESOURCE, {
+    update(cache, { data: { createResource } }) {
+      {
+        cache.modify({
+          fields: {
+            resources(existingResources = []) {
+              const newResourceRef = cache.writeFragment({
+                data: createResource,
+                fragment: gql`
+                  fragment NewResource on Resource {
+                    id
+                    title
+                    url
+                  }
+                `,
+              })
+              return [...existingResources, newResourceRef]
+            },
+          },
+        })
+      }
+    },
+  })
 
   function handleAdd() {
     toggleAdd((prev) => !prev)
+  }
+
+  const handleSubmit = () => {
+    createResource({ variables: { title: resource.title, url: resource.url } })
+      .then(({ data }) => {
+        console.log(data)
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+
+    toggleAdd((prev) => !prev)
+  }
+
+  const handleChangeValue = (event: ChangeEvent<any>) => {
+    const { name, value } = event.target
+    setResource({ [name]: value })
   }
 
   return (
@@ -31,7 +82,7 @@ const ResourceCard: React.FC<Props> = (props) => {
               <button className={classNames('cancelBtn', 'actionResourceBtn')} onClick={handleAdd}>
                 <a>Cancel</a>
               </button>
-              <button className={classNames('saveBtn', 'actionResourceBtn')} onClick={handleAdd}>
+              <button className={classNames('saveBtn', 'actionResourceBtn')} onClick={handleSubmit}>
                 <a>Save</a>
               </button>
             </>
@@ -49,24 +100,29 @@ const ResourceCard: React.FC<Props> = (props) => {
           <div className={'addResourceForm'}>
             <input
               type="text"
+              name="title"
               placeholder="title"
+              value={resource.name}
+              onChange={(e) => handleChangeValue(e)}
               className="border border-gray-300 p-2 h-8 w-full mb-1  rounded-sm focus:outline-none"
             />
             <textarea
-              defaultValue={'https://'}
+              value={resource.url}
+              name="url"
               placeholder="url"
+              onChange={(e) => handleChangeValue(e)}
               className="border app w-full  p-2 h-full max-h-80 focus:outline-none rounded-sm"
             ></textarea>
           </div>
         </div>
       ) : null}
-      {props.loading ? (
+      {loading ? (
         <p>Loading... </p>
-      ) : props.errors ? (
+      ) : error ? (
         <p>Uh oh!</p>
-      ) : props.data ? (
+      ) : data ? (
         <div>
-          {props.data.map((resource: ResourceModel) => (
+          {data.resources.map((resource: ResourceModel) => (
             <ResourceCandyBar
               key={resource.id}
               active={showAdd}
