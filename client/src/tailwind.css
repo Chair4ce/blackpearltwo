@@ -112,7 +112,7 @@ code {
   cursor: pointer;
   border-radius: 3px;
   width: 85px;
-  height: 40px;
+  height: 30px;
 }
 .actionResourceBtn {
   background: transparent;
@@ -121,11 +121,25 @@ code {
   cursor: pointer;
   border-radius: 3px;
   width: 64px;
-  height: 40px;
+  height: 30px;
 }
 
 .saveBtn {
   background: #639168;
+}
+
+.saveBtn:hover {
+  background: #89b58e;
+}
+
+.cancelBtn:hover {
+  background: #aeaeae;
+}
+
+.textInput {
+  border: none;
+  color: white;
+  background: #2f2f2f;
 }
 
 .addResourceBtn:focus {
