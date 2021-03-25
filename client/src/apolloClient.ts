@@ -3,9 +3,14 @@ import { ApolloClient, InMemoryCache } from '@apollo/client';
 
 const client = new ApolloClient(
     {
-        uri: 'http://localhost:8080/api/graphql',
+        uri: '/api/graphql',
         cache: new InMemoryCache(),
         connectToDevTools: true,
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, POST',
+            'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
+        },
     },
 );
 

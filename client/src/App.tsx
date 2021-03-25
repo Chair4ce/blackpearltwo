@@ -1,19 +1,11 @@
 import React from 'react'
-import ResourceModel from './store/ResourceModel'
 import ResourceCard from './component/resourceCard/resourceCard'
 import classNames from 'classnames'
 
-export interface Props {
-  className?: string
-}
 
-export interface ResourceData {
-  resources: ResourceModel[]
-}
-
-const App: React.FC<Props> = (props) => {
+function App() {
   return (
-    <div data-testid="App" className={classNames(props.className, 'app')}>
+    <div data-testid="App" className={classNames( 'app')}>
       <div className={'resourceColumn'}>
         <ResourceCard title={'Main'} />
       </div>
