@@ -1,6 +1,7 @@
 import * as React from 'react'
 import classNames from 'classnames'
 import GlobeIcon from '../../icons/Globe'
+import ThreeDotIcon from '../../icons/threedot'
 
 export interface Props {
   status: boolean
@@ -12,10 +13,15 @@ export interface Props {
 const CandyBarInfo: React.FC<Props> = (props) => {
   return (
     <div data-testid="CandyBarInfo" className={classNames(props.className, 'candyBarInfo')}>
-      <div className={'candyBarInfocon'}>
-        <GlobeIcon status={props.status} />
+      <div className={'candyBarInfoTitle'}>
+        <div className={'candyBarInfocon'}>
+          <GlobeIcon status={props.status} />
+        </div>
+        <h2>{props.title}</h2>
       </div>
-      <h2>{props.title}</h2>
+      <div className="candyBarMenu">
+        <ThreeDotIcon />
+      </div>
     </div>
   )
 }

@@ -7,6 +7,8 @@ import ResourceModel from '../../store/ResourceModel'
 import { useMutation, useQuery } from '@apollo/client'
 import { CREATE_RESOURCE } from '../../store/site/Mutations/CREATE_RESOURCE'
 import { FETCH_RESOURCES } from '../../store/site/Queries/FETCH_RESOURCES'
+import AddResourceIcon from '../../icons/AddResource'
+import TrashIcon from '../../icons/Trash'
 
 export interface Props {
   title: string
@@ -72,11 +74,10 @@ const ResourceCard: React.FC<Props> = (props) => {
       <div className={'resourceColumnHeader'}>
         <h2>{props.title}</h2>
         <div className={'cardActions'}>
-          {!showAdd ? (
-            <button className={'addResourceBtn'} onClick={handleAdd}>
-              <a>+ Add Link</a>
-            </button>
-          ) : null}
+          <button className={'addResourceBtn'} onClick={handleAdd}>
+            <a>Add</a>
+            <AddResourceIcon />
+          </button>
         </div>
       </div>
       {showAdd ? (

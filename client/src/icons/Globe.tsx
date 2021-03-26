@@ -8,7 +8,7 @@ export interface Props {
 
 const GlobeIcon: React.FC<Props> = (props) => {
   return (
-    <div data-testid="GlobeIcon" className={classNames(props.className, '')}>
+    <div data-testid="GlobeIcon" className={classNames(props.className, 'globeIcon')}>
       <svg
         width="24"
         height="24"

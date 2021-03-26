@@ -11,10 +11,10 @@ export interface Props {
 const ResourceCandyBar: React.FC<Props> = (props) => {
   return (
     <div data-testid="CandyBarWrapper" className={classNames(props.className, 'candyBarWrapper')}>
-      {/*{props.active ? <div className={'candyBarWrapperDisabled'} /> : null}*/}
       <a className={'resourceLink'} href={props.url} target={'_blank'} title={props.name}>
-        {props.children}
+        <div className={'resourceLinkFrame'}></div>
       </a>
+      {props.children}
     </div>
   )
 }
