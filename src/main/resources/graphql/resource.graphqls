@@ -14,6 +14,6 @@ type Query {
 type Mutation {
   createResource(title: String!, url: String!): [Resource]!
   updateResource(id: ID!, title: String!, url: String!): Resource!
-  deleteResource(id: ID!): Boolean
+  deleteResource(id: Int!): Boolean
 }
 

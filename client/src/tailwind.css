@@ -21,46 +21,35 @@ code {
 
 /*//Resource Column*/
 /*---------------------------------------------------------*/
-.candyBarWrapper {
-  height: 32px;
-  width: 100%;
-  margin: 2px 0 2px 0;
-  border-radius: 3px;
-}
-.candyBarWrapper a {
-  width: 100%;
-  height: 100%;
-}
-
-
 
 .candyBarWrapper:active {
   background: #5f5f5f;
 }
 
-.candyBarInfo {
-  width: 100%;
-  height: 100%;
+.candyBarMenuBtn {
+  width: 32px;
+  height: 32px;
+}
+
+.candyBarWrapper {
   background: #373f51;
-  display: flex;
-  flex-direction: row;
-  justify-content: start;
-  align-items: center;
-  z-index: 99;
-  border-radius: 2px;
+}
+
+.candyBarTargetLink h2 {
+
+  max-width: 229px;
   /*transition-property: width;*/
   /*transition-duration: .1s;*/
   /*transition-timing-function: linear;*/
   /*transition-delay: .6s;*/
 }
 
-.candyBarInfoTitle {
-  width: 90%;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: start;
-  align-items: center;
+.candyBarMenuButton:focus {
+  outline: thin dotted;
+}
+
+.candyBarMenuButton {
+  min-width: 28px;
 }
 
 .candyBarMenu {
@@ -69,12 +58,17 @@ code {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 100;
   border-radius: 4px;
 }
 
 .candyBarMenu:hover {
   background: #4f4f4f;
+}
+
+.candyBarInfo {
+  height: 28px;
+  width: 100%;
+  margin: 2px;
 }
 .candyBarInfo:hover {
   background: #464646;
@@ -84,6 +78,7 @@ code {
 .candyBarInfo h2 {
   font-weight: bold;
   color: white;
+
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -134,7 +129,7 @@ code {
   border-radius: 3px;
   width: 318px;
   height: 752px;
-  padding: 2px 4px 2px 4px;
+  padding: 2px 0px 2px 4px;
 }
 
 .cardActions {
@@ -163,7 +158,6 @@ code {
 .actionResourceBtn {
   background: transparent;
   border: none;
-  outline: none;
   cursor: pointer;
   border-radius: 3px;
   width: 64px;
@@ -181,6 +175,10 @@ code {
 .saveBtn:hover {
   background: #d9f3db;
   transition: background-color .3s ease-in-out;
+}
+
+.saveBtn:focus {
+  outline: thin dotted;
 }
 
 .cancelBtn:hover {

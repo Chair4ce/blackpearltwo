@@ -7,6 +7,7 @@
   "dependencies": {
     "@apollo/client": "^3.3.11",
     "@craco/craco": "^6.1.1",
+    "@headlessui/react": "^0.3.1",
     "@testing-library/dom": "7.21.4",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
@@ -21,8 +22,10 @@
     "graphql": "^15.5.0",
     "prettier": "^2.2.1",
     "react": "^17.0.1",
+    "react-click-away-listener": "^2.0.0",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.2",
+    "react-scrollbars-custom": "^4.0.25",
     "react-select": "^4.2.1",
     "react-select-event": "^5.2.0",
     "stylelint": "10.1.0",

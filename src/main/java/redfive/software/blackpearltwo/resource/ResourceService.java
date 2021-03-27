@@ -66,6 +66,7 @@ public class ResourceService {
     }
 
     public boolean deleteResource(Long id) {
+        System.out.println("attempting to delete " + id);
         resourceRepository.deleteById(id);
         return true;
     }
