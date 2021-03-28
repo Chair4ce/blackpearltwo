@@ -5,9 +5,17 @@ import { ApolloProvider } from '@apollo/client'
 import client from '../../apolloClient'
 
 function renderMainView() {
+  const mockFn = jest.fn()
   return render(
     <ApolloProvider client={client}>
-      <ResourceCandyBar />
+      <ResourceCandyBar
+        active={true}
+        id={1}
+        title={'facebook'}
+        url={'facebook.com'}
+        callback={mockFn}
+        showMenu={true}
+      />
     </ApolloProvider>
   )
 }

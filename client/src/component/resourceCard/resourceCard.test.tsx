@@ -7,7 +7,7 @@ import client from '../../apolloClient'
 function renderMainView() {
   return render(
     <ApolloProvider client={client}>
-      <ResourceCard />
+      <ResourceCard title={'facebook'} />
     </ApolloProvider>
   )
 }

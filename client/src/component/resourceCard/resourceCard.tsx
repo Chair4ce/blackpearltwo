@@ -125,7 +125,7 @@ const ResourceCard: React.FC<Props> = (props) => {
         leaveTo="transform opacity-0 scale-95"
       >
         {(ref) => (
-          <div className={'addResource'}>
+          <div ref={ref} className={'addResource'}>
             <div className={'addResourceForm'}>
               <input
                 type="text"
