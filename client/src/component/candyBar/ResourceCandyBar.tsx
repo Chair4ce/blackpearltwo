@@ -95,7 +95,7 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
         leaveTo="transform opacity-0 scale-95"
       >
         {(ref) => (
-          <div className={'editResource'}>
+          <div className="editResource mb-2">
             <div className={'editResourceForm'}>
               <input
                 type="text"
@@ -114,18 +114,18 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
               ></textarea>
             </div>
             {showAdd && (
-              <div className="flex w-full justify-start mt-1">
+              <div className="flex w-full justify-center mt-1">
                 <button
-                  className={classNames('cancelBtn', 'actionResourceBtn')}
+                  className={'cancelBtn actionResourceBtn'}
                   onClick={() => handleCancel()}
                 >
-                  <a>Cancel</a>
+                  <a>CANCEL</a>
                 </button>
                 <button
-                  className={classNames('saveBtn', 'actionResourceBtn', 'ml-1')}
+                  className={'saveBtn actionResourceBtn ml-1'}
                   onClick={() => handleSubmit()}
                 >
-                  <a>Save</a>
+                  <a>SAVE</a>
                 </button>
               </div>
             )}

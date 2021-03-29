@@ -168,11 +168,20 @@ code {
 }
 
 .saveBtn {
-  background: #BAF2BB;
+  color: #333333;
+  background: #6C9CD5;
+  font-weight: bold;
+}
+
+.cancelBtn {
+  background: #333333;
+  color: #6C9CD5;
+  font-weight: bold;
+  width: 76px;
 }
 
 .saveBtn:hover {
-  background: #d9f3db;
+  background: #4a4a4a;
   transition: background-color .3s ease-in-out;
 }
 
@@ -181,7 +190,7 @@ code {
 }
 
 .cancelBtn:hover {
-  background: #aeaeae;
+  background: #4a4a4a;
   transition: background-color .3s ease-in-out;
 }
 
@@ -210,8 +219,8 @@ code {
 .addResource {
   background: #373f51;
   width: 100%;
-  padding: 4px;
-  border-radius: 3px;
+  padding: 2px;
+  border-radius: 2px;
 }
 
 .addResourceForm {

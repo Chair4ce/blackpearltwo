@@ -125,7 +125,7 @@ const ResourceCard: React.FC<Props> = (props) => {
         leaveTo="transform opacity-0 scale-95"
       >
         {(ref) => (
-          <div ref={ref} className={'addResource'}>
+          <div ref={ref} className={'addResource mb-2'}>
             <div className={'addResourceForm'}>
               <input
                 type="text"
@@ -143,18 +143,18 @@ const ResourceCard: React.FC<Props> = (props) => {
               ></textarea>
             </div>
             {showAdd && (
-              <div className="flex w-full justify-start mt-1">
+              <div className="flex w-full justify-center mt-1 ">
                 <button
                   className={classNames('cancelBtn', 'actionResourceBtn')}
                   onClick={handleAdd}
                 >
-                  <a>Cancel</a>
+                  <a>CANCEL</a>
                 </button>
                 <button
                   className={classNames('saveBtn', 'actionResourceBtn', 'ml-1')}
                   onClick={handleSubmit}
                 >
-                  <a>Save</a>
+                  <a>SAVE</a>
                 </button>
               </div>
             )}
