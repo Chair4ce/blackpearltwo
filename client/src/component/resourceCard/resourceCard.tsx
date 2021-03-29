@@ -104,8 +104,8 @@ const ResourceCard: React.FC<Props> = (props) => {
   }
 
   return (
-    <div data-testid="ResourceCard" className={classNames(props.className, 'h-full')}>
-      <div className={'resourceColumnHeader'}>
+    <div data-testid="ResourceCard" className="h-full resourceCard">
+      <div className={'resourceColumnHeader rounded-sm'}>
         <h2>{props.title}</h2>
         <div className={'cardActions'}>
           <button className={'addResourceBtn'} onClick={handleAdd}>
@@ -125,7 +125,7 @@ const ResourceCard: React.FC<Props> = (props) => {
         leaveTo="transform opacity-0 scale-95"
       >
         {(ref) => (
-          <div ref={ref} className={'addResource mb-2'}>
+          <div ref={ref} className={'addResource'}>
             <div className={'addResourceForm'}>
               <input
                 type="text"
@@ -133,7 +133,7 @@ const ResourceCard: React.FC<Props> = (props) => {
                 placeholder="title"
                 value={resource.name}
                 onChange={(e) => handleChangeValue(e)}
-                className="textInput border border-gray-300 p-2 h-8 w-full mb-1  rounded-sm focus:outline-none"
+                className="textInput border border-gray-300 p-2 h-8 w-full mb-1 rounded-sm focus:outline-none"
               />
               <textarea
                 name="url"
@@ -142,28 +142,26 @@ const ResourceCard: React.FC<Props> = (props) => {
                 className="textInput border app w-full  p-2 h-full max-h-80 focus:outline-none rounded-sm"
               ></textarea>
             </div>
-            {showAdd && (
-              <div className="flex w-full justify-center mt-1 ">
+              <div className="addResourceFormBtn flex w-full items-center h-10 mt-1">
                 <button
-                  className={classNames('cancelBtn', 'actionResourceBtn')}
+                  className="cancelBtn actionResourceBtn"
                   onClick={handleAdd}
                 >
                   <a>CANCEL</a>
                 </button>
                 <button
-                  className={classNames('saveBtn', 'actionResourceBtn', 'ml-1')}
+                  className="saveBtn actionResourceBtn"
                   onClick={handleSubmit}
                 >
                   <a>SAVE</a>
                 </button>
               </div>
-            )}
           </div>
         )}
       </Transition>
 
       <Scrollbar style={{ width: 312, height: 706 }}>
-        <div className={'h-full'}>
+        <div className={'h-full resources'}>
           {data
             ? data.resources
                 .slice()

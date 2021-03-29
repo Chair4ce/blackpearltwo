@@ -95,7 +95,7 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
         leaveTo="transform opacity-0 scale-95"
       >
         {(ref) => (
-          <div className="editResource mb-2">
+          <div className="editResource mb-2 mt-1">
             <div className={'editResourceForm'}>
               <input
                 type="text"
@@ -103,7 +103,7 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
                 placeholder="title"
                 value={resource.title}
                 onChange={(e) => handleChangeValue(e)}
-                className="textInput border border-gray-300 p-2 h-8 w-full mb-1   focus:outline-none"
+                className="textInput border rounded-sm border-gray-300 p-2 h-8 w-full mb-1   focus:outline-none"
               />
               <textarea
                 name="url"
@@ -136,7 +136,7 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
       {!showAdd && (
         <div
           data-testid="CandyBarWrapper"
-          className="candyBarWrapper block w-full rounded-sm  mt-1 mr-0 mb-1 ml-0 h-8"
+          className="candyBarWrapper block w-full rounded-sm mt-1 mr-0 mb-1 ml-0 h-8"
         >
           <div className="flex items-center justify-center h-full w-full pr-0.5">
             <div data-testid="CandyBarInfo" className="candyBarInfo block rounded-sm   ">
