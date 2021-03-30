@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { ChangeEvent, useEffect, useReducer, useState } from 'react'
-import classNames from 'classnames'
 import ResourceCandyBar from '../candyBar/ResourceCandyBar'
 import ResourceModel from '../../store/ResourceModel'
 import { useMutation, useQuery } from '@apollo/client'
@@ -21,6 +20,7 @@ export interface ResourceData {
 }
 
 const ResourceCard: React.FC<Props> = (props) => {
+  let textInput: { focus: () => void } | null = null
   const [showAdd, toggleAdd] = useState(false)
 
   const { loading, error, data } = useQuery<ResourceData>(FETCH_RESOURCES)
@@ -85,6 +85,15 @@ const ResourceCard: React.FC<Props> = (props) => {
     setResource(null)
   }, [createResource])
 
+  useEffect(() => {
+    setTimeout(() => {
+      let element = document.getElementById('resourceTitleInput')
+      if (element instanceof HTMLInputElement) {
+        element.focus()
+      }
+    }, 100)
+  }, [showAdd])
+
   const handleSubmit = () => {
     if (resource.url.startsWith('http')) {
       createResource({ variables: { title: resource.title, url: resource.url } })
@@ -101,6 +110,12 @@ const ResourceCard: React.FC<Props> = (props) => {
   const handleChangeValue = (event: ChangeEvent<any>) => {
     const { name, value } = event.target
     setResource({ [name]: value })
+  }
+
+  const handleKeyDown = (e: any) => {
+    if (e.key === 'Enter') {
+      handleSubmit()
+    }
   }
 
   return (
@@ -125,9 +140,10 @@ const ResourceCard: React.FC<Props> = (props) => {
         leaveTo="transform opacity-0 scale-95"
       >
         {(ref) => (
-          <div ref={ref} className={'addResource'}>
+          <div ref={ref} className="resourceForm addResource">
             <div className={'addResourceForm'}>
               <input
+                id="resourceTitleInput"
                 type="text"
                 name="title"
                 placeholder="title"
@@ -138,24 +154,19 @@ const ResourceCard: React.FC<Props> = (props) => {
               <textarea
                 name="url"
                 placeholder="url"
+                onKeyDown={(e) => handleKeyDown(e)}
                 onChange={(e) => handleChangeValue(e)}
                 className="textInput border app w-full  p-2 h-full max-h-80 focus:outline-none rounded-sm"
               ></textarea>
             </div>
-              <div className="addResourceFormBtn flex w-full items-center h-10 mt-1">
-                <button
-                  className="cancelBtn actionResourceBtn"
-                  onClick={handleAdd}
-                >
-                  <a>CANCEL</a>
-                </button>
-                <button
-                  className="saveBtn actionResourceBtn"
-                  onClick={handleSubmit}
-                >
-                  <a>SAVE</a>
-                </button>
-              </div>
+            <div className="resourceFormBtn flex w-full items-center h-10 mt-1">
+              <button className="cancelBtn actionResourceBtn" onClick={handleAdd}>
+                <a>CANCEL</a>
+              </button>
+              <button className="saveBtn actionResourceBtn" onClick={handleSubmit}>
+                <a>SAVE</a>
+              </button>
+            </div>
           </div>
         )}
       </Transition>

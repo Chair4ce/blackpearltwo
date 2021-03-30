@@ -95,7 +95,7 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
         leaveTo="transform opacity-0 scale-95"
       >
         {(ref) => (
-          <div className="editResource mb-2 mt-1">
+          <div className="resourceForm editResource mb-2 mt-1">
             <div className={'editResourceForm'}>
               <input
                 type="text"
@@ -103,7 +103,7 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
                 placeholder="title"
                 value={resource.title}
                 onChange={(e) => handleChangeValue(e)}
-                className="textInput border rounded-sm border-gray-300 p-2 h-8 w-full mb-1   focus:outline-none"
+                className="textInput border rounded-sm border-gray-300 p-2 h-8 w-full mb-1 focus:outline-none"
               />
               <textarea
                 name="url"
@@ -113,22 +113,14 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
                 className="textInput border app w-full  p-2 h-full max-h-80 focus:outline-none rounded-sm"
               ></textarea>
             </div>
-            {showAdd && (
-              <div className="flex w-full justify-center mt-1">
-                <button
-                  className={'cancelBtn actionResourceBtn'}
-                  onClick={() => handleCancel()}
-                >
-                  <a>CANCEL</a>
-                </button>
-                <button
-                  className={'saveBtn actionResourceBtn ml-1'}
-                  onClick={() => handleSubmit()}
-                >
-                  <a>SAVE</a>
-                </button>
-              </div>
-            )}
+            <div className="resourceFormBtn flex w-full h-10 mt-1">
+              <button className={'cancelBtn actionResourceBtn'} onClick={() => handleCancel()}>
+                <a>CANCEL</a>
+              </button>
+              <button className={'saveBtn actionResourceBtn ml-1'} onClick={() => handleSubmit()}>
+                <a>SAVE</a>
+              </button>
+            </div>
           </div>
         )}
       </Transition>
@@ -198,7 +190,7 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
                     <ClickAwayListener onClickAway={handleClickAway}>
                       <div
                         ref={ref}
-                        className="origin-left shadow-sm absolute z-50 right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none"
+                        className="origin-left shadow-md absolute z-50 right-0 mt-2 w-56 rounded-sm shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none"
                         role="menu"
                         aria-orientation="vertical"
                         aria-labelledby="options-menu"
@@ -206,7 +198,7 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
                         <div className="py-1" role="none">
                           <a
                             href="#"
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-300 hover:text-gray-900"
                             role="menuitem"
                             onClick={() => handleEdit()}
                           >
@@ -214,7 +206,7 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
                           </a>
                           <a
                             href="#"
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-300 hover:text-gray-900"
                             role="menuitem"
                             onClick={() => handleClick(props.id, 'delete')}
                           >
