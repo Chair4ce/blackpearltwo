@@ -110,8 +110,8 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
                 placeholder="url"
                 value={resource.url}
                 onChange={(e) => handleChangeValue(e)}
-                className="textInput border app w-full  p-2 h-full max-h-80 focus:outline-none rounded-sm"
-              ></textarea>
+                className="textInput border app w-full p-2 max-h-60 focus:outline-none rounded-sm"
+              />
             </div>
             <div className="resourceFormBtn flex w-full h-10 mt-1">
               <button className={'cancelBtn actionResourceBtn'} onClick={() => handleCancel()}>

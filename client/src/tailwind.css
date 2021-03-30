@@ -14,9 +14,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-.root {
-  background: #2f2a2a;
+#root {
+  background: #2F343B;
   height: 100%;
+}
+
+.app {
+  height: 100vh;
 }
 
 /*//Resource Column*/
