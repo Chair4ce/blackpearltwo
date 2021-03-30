@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ChangeEvent, useReducer, useState } from 'react'
+import {ChangeEvent, useEffect, useReducer, useState} from 'react'
 import GlobeIcon from '../../icons/Globe'
 import ClickAwayListener from 'react-click-away-listener'
 import { Transition } from '@headlessui/react'
@@ -19,7 +19,7 @@ export interface Props {
 }
 
 const ResourceCandyBar: React.FC<Props> = (props) => {
-  const [showAdd, toggleAdd] = useState(false)
+  const [showEdit, toggleEdit] = useState(false)
 
   const [updateResource] = useMutation(UPDATE_RESOURCE, {
     refetchQueries: [
@@ -63,17 +63,17 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
         .catch((e: any) => {
           console.log(e)
         })
-      toggleAdd((prev) => !prev)
+      toggleEdit((prev) => !prev)
       setResource('')
     }
   }
 
   function handleCancel() {
-    toggleAdd((prev) => !prev)
+    toggleEdit((prev) => !prev)
     setResource('')
   }
   function handleEdit() {
-    toggleAdd((prev) => !prev)
+    toggleEdit((prev) => !prev)
     props.callback(-1, true)
     setResource({ ['title']: props.title })
     setResource({ ['url']: props.url })
@@ -83,10 +83,46 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
     props.callback(-1, true)
   }
 
+  const handleEditFormClickAway = () => {
+    toggleEdit((prev) => !prev)
+    setResource('')
+  }
+
+  useEffect(() => {
+    setTimeout(() => {
+      let parent = document.getElementById('editResourceForm')
+      let element = document.getElementById('resourceTitleInput')
+
+      if (element instanceof HTMLInputElement) {
+        parent!.scrollIntoView()
+        element.focus()
+      }
+    }, 25)
+
+    return function cleanup() {
+
+    };
+  }, [showEdit])
+
+  useEffect(() => {
+    setTimeout(() => {
+      let element = document.getElementById('resourceActionMenu')
+
+      if (element instanceof HTMLInputElement) {
+        element!.scrollIntoView()
+
+      }
+    }, 25)
+
+    return function cleanup() {
+
+    };
+  }, [props.showMenu])
+
   return (
     <>
       <Transition
-        show={showAdd}
+        show={showEdit}
         enter="transition ease-out duration-100"
         enterFrom="transform opacity-0 scale-95"
         enterTo="transform opacity-100 scale-100"
@@ -95,9 +131,10 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
         leaveTo="transform opacity-0 scale-95"
       >
         {(ref) => (
-          <div className="resourceForm editResource mb-2 mt-1">
+          <div id={'editResourceForm'} className="resourceForm editResource mb-2 mt-2">
             <div className={'editResourceForm'}>
               <input
+                  id="resourceTitleInput"
                 type="text"
                 name="title"
                 placeholder="title"
@@ -125,10 +162,10 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
         )}
       </Transition>
 
-      {!showAdd && (
+      {!showEdit && (
         <div
           data-testid="CandyBarWrapper"
-          className="candyBarWrapper block w-full rounded-sm mt-1 mr-0 mb-1 ml-0 h-8"
+          className="candyBarWrapper block w-full rounded-sm mt-1 mr-0 mb-1 ml-0"
         >
           <div className="flex items-center justify-center h-full w-full pr-0.5">
             <div data-testid="CandyBarInfo" className="candyBarInfo block rounded-sm   ">
@@ -189,8 +226,8 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
                   {(ref) => (
                     <ClickAwayListener onClickAway={handleClickAway}>
                       <div
-                        ref={ref}
-                        className="origin-left shadow-md absolute z-50 right-0 mt-2 w-56 rounded-sm shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none"
+                        id={'resourceActionMenu'}
+                        className="resourceActionMenu origin-left absolute z-50 right-0 mt-2 w-56 rounded-sm shadow-lg bg-black ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none"
                         role="menu"
                         aria-orientation="vertical"
                         aria-labelledby="options-menu"
@@ -198,7 +235,7 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
                         <div className="py-1" role="none">
                           <a
                             href="#"
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-300 hover:text-gray-900"
+                            className="menuItem block px-4 py-2 text-sm text-gray-700 hover:text-gray-900"
                             role="menuitem"
                             onClick={() => handleEdit()}
                           >
@@ -206,7 +243,7 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
                           </a>
                           <a
                             href="#"
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-300 hover:text-gray-900"
+                            className="menuItem block px-4 py-2 text-sm text-gray-700 hover:text-gray-900"
                             role="menuitem"
                             onClick={() => handleClick(props.id, 'delete')}
                           >

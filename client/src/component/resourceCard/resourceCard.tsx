@@ -88,10 +88,15 @@ const ResourceCard: React.FC<Props> = (props) => {
   useEffect(() => {
     setTimeout(() => {
       let element = document.getElementById('resourceTitleInput')
+
       if (element instanceof HTMLInputElement) {
         element.focus()
       }
     }, 100)
+
+    return function cleanup() {
+
+    };
   }, [showAdd])
 
   const handleSubmit = () => {
@@ -140,8 +145,8 @@ const ResourceCard: React.FC<Props> = (props) => {
         leaveTo="transform opacity-0 scale-95"
       >
         {(ref) => (
-          <div className="resourceForm addResource">
-            <div className={'addResourceForm'}>
+          <div   className="resourceForm addResource">
+            <div id={'addForm'} className={'addResourceForm'}>
               <input
                 id="resourceTitleInput"
                 type="text"
@@ -171,7 +176,7 @@ const ResourceCard: React.FC<Props> = (props) => {
         )}
       </Transition>
 
-      <Scrollbar style={{ width: 312, height: 706 }}>
+      <Scrollbar id={'Addresource'} style={{ width: 312, height: 706 }}>
         <div className={'h-full resources'}>
           {data
             ? data.resources

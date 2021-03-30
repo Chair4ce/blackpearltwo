@@ -15,12 +15,11 @@ code {
 }
 
 #root {
-  background: #2F343B;
-  height: 100%;
+  background: #1B1B1E;
+  height: 100vh;
 }
 
 .app {
-  height: 100vh;
 }
 
 /*//Resource Column*/
@@ -37,6 +36,7 @@ code {
 
 .candyBarWrapper {
   background: #373f51;
+  height: 33px;
 }
 
 .candyBarTargetLink h2 {
@@ -61,6 +61,7 @@ code {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 2px;
 }
 
 .candyBarMenu:hover {
@@ -68,7 +69,7 @@ code {
 }
 
 .candyBarInfo {
-  height: 28px;
+  height: 29px;
   width: 100%;
   margin: 2px;
 }
@@ -91,7 +92,7 @@ code {
   justify-content: center;
   align-items: center;
   min-width: 32px;
-  height: 32px;
+  height: 29px;
 }
 
 .resourceLinkFrame {
@@ -133,9 +134,10 @@ code {
   justify-content: start;
   background: #1b1b1e;
   border-radius: 3px;
-  width: 317px;
-  height: 752px;
+  max-width: 318px;
+  max-height: 752px;
   padding: 2px;
+  overflow-y: hidden;
 }
 
 .cardActions {
@@ -169,6 +171,10 @@ code {
   width: 64px;
   height: 30px;
 
+}
+
+.menuItem:hover {
+  background: #484848;
 }
 
 .trashIcon {
@@ -207,6 +213,10 @@ code {
   background: #2f2f2f;
 }
 
+.resourceActionMenu {
+  box-shadow: 0 3px 8px rgba(0, 0, 0, .75);
+}
+
 .addResourceBtn:focus {
   outline:0;
 }
@@ -231,9 +241,10 @@ code {
 }
 
 .resourceForm {
-  width: 100%;
   border-radius: 2px;
   padding: 2px;
+  margin-right: 3px;
+  padding-right: 3px;
 }
 
 .addResourceForm {
