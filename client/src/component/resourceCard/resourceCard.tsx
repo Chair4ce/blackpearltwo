@@ -10,6 +10,7 @@ import { Transition } from '@headlessui/react'
 import { Scrollbar } from 'react-scrollbars-custom'
 import { DELETE_RESOURCE } from '../../store/site/Mutations/DELETE_RESOURCE'
 
+
 export interface Props {
   title: string
   className?: string
