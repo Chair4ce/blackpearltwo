@@ -15,11 +15,17 @@ code {
 }
 
 #root {
-  background: #1B1B1E;
+  background: #2F343B;
   height: 100vh;
 }
 
 .app {
+}
+
+.widgetDrawer {
+  height: 892px;
+  width: 319px;
+  background: linear-gradient(180deg, rgba(27, 27, 30, 0.79) 0%, rgba(27, 27, 30, 0.25) 100%);
 }
 
 /*//Resource Column*/
@@ -104,6 +110,11 @@ code {
   padding-left: 1px
 }
 
+.pearlogo {
+  position: relative;
+  top: 19px;
+}
+
 
 .resourceColumnHeader {
   height: 40px;
@@ -113,7 +124,7 @@ code {
   position: sticky;
   top: 0;
   z-index: 1;
-  background: black;
+  background: #1B1B1E;
 }
 
 .resourceColumnHeader h2 {
@@ -132,10 +143,10 @@ code {
   cursor: pointer;
   flex-direction: column;
   justify-content: start;
-  background: #1b1b1e;
+  /*background: #2a2a35;*/
+  background: linear-gradient(180deg, rgba(27, 27, 30, 0.79) 0%, rgba(27, 27, 30, 0.25) 100%);
   border-radius: 3px;
   max-width: 318px;
-  max-height: 752px;
   padding: 2px;
   overflow-y: hidden;
 }
@@ -242,9 +253,7 @@ code {
 
 .resourceForm {
   border-radius: 2px;
-  padding: 2px;
-  margin-right: 3px;
-  padding-right: 3px;
+  padding: 2px 2px 2px 2px;
 }
 
 .addResourceForm {

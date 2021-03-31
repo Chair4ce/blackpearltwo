@@ -176,7 +176,7 @@ const ResourceCard: React.FC<Props> = (props) => {
         )}
       </Transition>
 
-      <Scrollbar id={'Addresource'} style={{ width: 312, height: 706 }}>
+      <Scrollbar id={'Addresource'} style={{ width: 312, height: 768 }}>
         <div className={'h-full resources'}>
           {data
             ? data.resources
