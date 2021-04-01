@@ -110,6 +110,13 @@ code {
   padding-left: 1px
 }
 
+.tzTitle {
+  color: #76ACED;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+
 .resourceCard {
   max-height: 808px;
 }
