@@ -174,7 +174,7 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
       >
         {(ref) => (
         <div
-          data-testid="CandyBarWrapper"
+          data-testid="CandyBarWrapper "
           className="candyBarWrapper block w-full rounded-sm mt-1 mr-0 mb-1 ml-0"
         >
           <div className="flex items-center justify-center h-full w-full pr-0.5">

@@ -41,40 +41,40 @@ const TimeZoneClock: React.FC<Props> = (props) => {
     }, [])
 
     return <div className="flex flex-row justify-evenly">
-        <a className="atoDay text-white text-2xl leading-10">{ato}</a>
+        <a className="atoDay text-white text-4xl leading-10">{ato}</a>
         <div className="timeZoneCol flex flex-col items-center">
-            <a className="tzTitle">LANGLEY</a>
-            <a className="tzTime text-white">
+            <a className="tzTitle text-sm">LANGLEY</a>
+            <a className="tzTime text-white text-sm">
                 {moment(utc).utcOffset(-5).format('HHmm')}
             </a>
         </div>
         <div className="timeZoneCol flex flex-col items-center">
-            <a className="tzTitle">PACIFIC</a>
-            <a className="tzTime text-white">
+            <a className="tzTitle text-sm">PACIFIC</a>
+            <a className="tzTime text-white text-sm">
                 {moment(utc).utcOffset(-8).format('HHmm')}
             </a>
         </div>
         <div className="timeZoneCol flex flex-col items-center">
-            <a className="tzTitle">CENTRAL</a>
-            <a className="tzTime text-white">
+            <a className="tzTitle text-sm">CENTRAL</a>
+            <a className="tzTime text-white text-sm">
                 {moment(utc).utcOffset(-6).format('HHmm')}
             </a>
         </div>
         <div className="timeZoneCol flex flex-col items-center">
-            <a className="tzTitle">HAWAII</a>
-            <a className="tzTime text-white">
+            <a className="tzTitle text-sm">HAWAII</a>
+            <a className="tzTime text-white text-sm">
                 {moment(utc).utcOffset(10).format('HHmm')}
             </a>
         </div>
         <div className="timeZoneCol flex flex-col items-center">
-            <a className="tzTitle">GERMANY</a>
-            <a className="tzTime text-white">
+            <a className="tzTitle text-sm">GERMANY</a>
+            <a className="tzTime text-white text-sm">
                 {moment(utc).utcOffset(1).format('HHmm')}
             </a>
         </div>
         <div className="timeZoneCol flex flex-col items-center">
-            <a className="tzTitle">ZULU</a>
-            <a className="tzTime text-white">
+            <a className="tzTitle text-sm">ZULU</a>
+            <a className="tzTime text-white text-sm">
                 {utc.format('HHmm')}
             </a>
         </div>
