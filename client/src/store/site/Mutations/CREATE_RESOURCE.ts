@@ -6,6 +6,7 @@ export const CREATE_RESOURCE = gql`
       id
       title
       url
+      status
     }
   }
 `

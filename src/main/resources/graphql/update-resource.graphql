@@ -3,5 +3,6 @@ mutation {
         id
         title
         url
+        status
     }
 }

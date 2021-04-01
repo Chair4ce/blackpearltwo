@@ -110,6 +110,10 @@ code {
   padding-left: 1px
 }
 
+.resourceCard {
+  max-height: 808px;
+}
+
 .pearlogo {
   position: relative;
   top: 19px;

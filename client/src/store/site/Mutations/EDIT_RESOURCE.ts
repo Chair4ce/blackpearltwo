@@ -6,6 +6,7 @@ export const UPDATE_RESOURCE = gql`
       id
       title
       url
+      status
     }
   }
 `

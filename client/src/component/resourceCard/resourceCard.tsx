@@ -138,7 +138,7 @@ const ResourceCard: React.FC<Props> = (props) => {
 
       <Transition
         show={showAdd}
-        enter="transition ease-out duration-100"
+        enter="transition ease-out duration-300"
         enterFrom="transform opacity-0 scale-95"
         enterTo="transform opacity-100 scale-100"
         leave="transition ease-in duration-75"
@@ -190,6 +190,7 @@ const ResourceCard: React.FC<Props> = (props) => {
                     key={resource.id}
                     id={resource.id}
                     active={showAdd}
+                    status={resource.status}
                     url={resource.url}
                     title={resource.title}
                     showMenu={showMenu == resource.id}

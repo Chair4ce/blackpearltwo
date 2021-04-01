@@ -30,7 +30,7 @@ public class ResourceQueryTest extends BaseIntegrationTest {
 
     @Test
     public void getResourceById() throws IOException {
-        Resource resource = new Resource(1L, "Facebook", "facebook.com");
+        Resource resource = new Resource(1L, "Facebook", "facebook.com", 200);
         when(resourceServiceMock.getResource(any())).thenReturn(resource);
         GraphQLResponse response = graphQLTestTemplate.postForResource("graphql/get-resource-by-id.graphql");
         assertTrue(response.isOk());
@@ -42,7 +42,7 @@ public class ResourceQueryTest extends BaseIntegrationTest {
 
     @Test
     public void createResource() throws IOException {
-        Iterable<Resource> resource = Arrays.asList(new Resource(1L, "Facebook", "facebook.com"), new Resource(2L, "Facebook", "facebook.com"));
+        Iterable<Resource> resource = Arrays.asList(new Resource(1L, "Facebook", "facebook.com", 200), new Resource(2L, "Facebook", "facebook.com", 200));
         when(resourceServiceMock.createResource(any(), any())).thenReturn(resource);
         GraphQLResponse response = graphQLTestTemplate.postForResource("graphql/create-resource.graphql");
         assertTrue(response.isOk());
@@ -52,7 +52,7 @@ public class ResourceQueryTest extends BaseIntegrationTest {
 
     @Test
     public void updateResource() throws IOException, NotFoundException {
-        Resource resource = new Resource(1L, "Instagram", "facebook.com");
+        Resource resource = new Resource(1L, "Instagram", "facebook.com", 200);
         when(resourceServiceMock.updateResource(any(), any(), any())).thenReturn(resource);
         GraphQLResponse response = graphQLTestTemplate.postForResource("graphql/update-resource.graphql");
         assertTrue(response.isOk());

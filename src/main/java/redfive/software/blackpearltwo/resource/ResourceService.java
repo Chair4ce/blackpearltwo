@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -36,7 +37,11 @@ public class ResourceService {
     public Iterable<Resource> createResource(String title, String url) {
         Resource resource = new Resource(title, url);
         Link preview = getLinkPreviewInfo(url);
+        if(preview != null) {
+        resource.setStatus(preview.getStatus());
         linkRepository.save(preview);
+        }
+
         resourceRepository.save(resource);
         return resourceRepository.findAll();
     }
@@ -45,7 +50,7 @@ public class ResourceService {
         List<Resource> links = resourceRepository.findAll();
         for (Resource link : links) {
             Link preview = getLinkPreviewInfo(link.getUrl());
-            if ( linkRepository.findByUrl(link.getUrl()) == null) {
+            if (linkRepository.findByUrl(link.getUrl()) == null) {
                 linkRepository.save(preview);
             }
         }
@@ -57,8 +62,16 @@ public class ResourceService {
             Resource resource = resourceRepository.findById(id).orElseThrow(RuntimeException::new);
             resource.setTitle(title);
             resource.setUrl(url);
+
             Link preview = getLinkPreviewInfo(url);
-            linkRepository.save(preview);
+            if (preview != null) {
+                resource.setStatus(preview.getStatus());
+                linkRepository.save(preview);
+            } else {
+                resource.setStatus(404);
+            }
+
+
             resourceRepository.save(resource);
             return resource;
         }
@@ -66,7 +79,6 @@ public class ResourceService {
     }
 
     public boolean deleteResource(Long id) {
-        System.out.println("attempting to delete " + id);
         resourceRepository.deleteById(id);
         return true;
     }
@@ -105,7 +117,8 @@ public class ResourceService {
         if (!url.startsWith("http")) {
             url = "http://" + url;
         }
-        Document document = Jsoup.connect(url).get();
+        Connection siteConnect = Jsoup.connect(url);
+        Document document = siteConnect.get();
         String title = getMetaTagContent(document, "meta[name=title]");
         String desc = getMetaTagContent(document, "meta[name=description]");
         String ogUrl = StringUtils.defaultIfBlank(getMetaTagContent(document, "meta[property=og:url]"), url);
@@ -119,7 +132,7 @@ public class ResourceService {
         } catch (Exception e) {
             logger.warn("Unable to connect to extract domain name from : {}", url);
         }
-        return new Link(domain, url, StringUtils.defaultIfBlank(ogTitle, title), StringUtils.defaultIfBlank(ogDesc, desc), ogImage, ogImageAlt);
+        return new Link(domain, url, StringUtils.defaultIfBlank(ogTitle, title), StringUtils.defaultIfBlank(ogDesc, desc), ogImage, ogImageAlt, siteConnect.response().statusCode());
     }
 
     private String getMetaTagContent(Document document, String cssQuery) {

@@ -6,6 +6,7 @@ export const FETCH_RESOURCES = gql`
       id
       title
       url
+      status
     }
   }
 `

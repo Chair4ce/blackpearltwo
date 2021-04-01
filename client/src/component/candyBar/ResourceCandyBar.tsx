@@ -13,6 +13,7 @@ export interface Props {
   id: number
   url: string
   title: string
+  status: number
   showMenu: boolean
   callback: (index: number, reset?: boolean, action?: string) => void
   className?: string
@@ -73,10 +74,10 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
     setResource('')
   }
   function handleEdit() {
-    toggleEdit((prev) => !prev)
-    props.callback(-1, true)
     setResource({ ['title']: props.title })
     setResource({ ['url']: props.url })
+    props.callback(-1, true)
+    toggleEdit((prev) => !prev)
   }
 
   const handleClickAway = () => {
@@ -123,12 +124,12 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
     <>
       <Transition
         show={showEdit}
-        enter="transition ease-out duration-100"
+        enter="transition ease-out duration-300"
         enterFrom="transform opacity-0 scale-95"
         enterTo="transform opacity-100 scale-100"
-        leave="transition ease-in duration-75"
-        leaveFrom="transform opacity-100 scale-100"
-        leaveTo="transform opacity-0 scale-95"
+        // leave="transition ease-in duration-75"
+        // leaveFrom="transform opacity-100 scale-100"
+        // leaveTo="transform opacity-0 scale-95"
       >
         {(ref) => (
           <div id={'editResourceForm'} className="resourceForm editResource mb-2 mt-2">
@@ -162,7 +163,16 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
         )}
       </Transition>
 
-      {!showEdit && (
+      <Transition
+          show={!showEdit}
+          enter="transition ease-out duration-300"
+          enterFrom="transform opacity-0 scale-95"
+          enterTo="transform opacity-100 scale-100"
+          // leave="transition ease-in duration-75"
+          // leaveFrom="transform opacity-100 scale-100"
+          // leaveTo="transform opacity-0 scale-95"
+      >
+        {(ref) => (
         <div
           data-testid="CandyBarWrapper"
           className="candyBarWrapper block w-full rounded-sm mt-1 mr-0 mb-1 ml-0"
@@ -177,7 +187,7 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
                 onClick={() => props.callback(-1, true)}
               >
                 <div className="candyBarInfocon ">
-                  <GlobeIcon status={props.active} />
+                  <GlobeIcon status={props.status === 200} />
                 </div>
                 <h2>{props.title}</h2>
               </a>
@@ -258,7 +268,8 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
             </div>
           </div>
         </div>
-      )}
+        )}
+      </Transition>
     </>
   )
 }

@@ -20,11 +20,20 @@ public class Resource {
 
     private String url;
 
+    private int status;
 
-    public Resource(Long id, String title, String url) {
+
+    public Resource(Long id, String title, String url, int status) {
         this.id = id;
         this.title = title;
         this.url = url;
+        this.status = status;
+    }
+
+    public Resource(String title, String url, int status) {
+        this.title = title;
+        this.url = url;
+        this.status = status;
     }
 
     public Resource(String title, String url) {

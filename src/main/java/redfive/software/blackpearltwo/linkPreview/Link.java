@@ -30,13 +30,16 @@ public class Link {
     @Column(name = "image_alt")
     private String imageAlt;
 
-    public Link(String domain, String url, String title, String description, String image, String imageAlt) {
+    private int status;
+
+    public Link(String domain, String url, String title, String description, String image, String imageAlt, int status) {
         this.domain = domain;
         this.url = url;
         this.title = title;
         this.description = description;
         this.image = image;
         this.imageAlt = imageAlt;
+        this.status = status;
     }
 
 }
