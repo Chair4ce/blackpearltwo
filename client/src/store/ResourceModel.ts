@@ -3,13 +3,17 @@ export default class ResourceModel {
   private _title: string
   private _url: string
   private _status: number
+  private _tab: number
+  private _card: number
 
 
-  constructor(id: number, title: string, url: string, status: number) {
+  constructor(id: number, title: string, url: string, status: number, tab: number, card: number) {
     this._id = id;
     this._title = title;
     this._url = url;
     this._status = status;
+    this._tab = tab;
+    this._card = card;
   }
 
   get id(): number {
@@ -42,5 +46,22 @@ export default class ResourceModel {
 
   set status(value: number) {
     this._status = value;
+  }
+
+
+  get tab(): number {
+    return this._tab;
+  }
+
+  set tab(value: number) {
+    this._tab = value;
+  }
+
+  get card(): number {
+    return this._card;
+  }
+
+  set card(value: number) {
+    this._card = value;
   }
 }

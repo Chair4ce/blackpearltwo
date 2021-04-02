@@ -7,6 +7,8 @@ export const FETCH_RESOURCES = gql`
       title
       url
       status
+      tab
+      card
     }
   }
 `

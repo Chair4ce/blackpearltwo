@@ -34,8 +34,8 @@ public class ResourceService {
         return resourceRepository.findAll();
     }
 
-    public Iterable<Resource> createResource(String title, String url) {
-        Resource resource = new Resource(title, url);
+    public Iterable<Resource> createResource(String title, String url, int tab, int card) {
+        Resource resource = new Resource(title, url, tab, card);
         Link preview = getLinkPreviewInfo(url);
         if(preview != null) {
         resource.setStatus(preview.getStatus());
@@ -56,7 +56,7 @@ public class ResourceService {
         }
     }
 
-    public Resource updateResource(Long id, String title, String url) throws javassist.NotFoundException {
+    public Resource updateResource(Long id, String title, String url, int tab, int card) throws javassist.NotFoundException {
 
         if (resourceRepository.findById(id).isPresent()) {
             Resource resource = resourceRepository.findById(id).orElseThrow(RuntimeException::new);

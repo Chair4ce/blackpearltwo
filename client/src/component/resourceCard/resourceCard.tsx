@@ -1,30 +1,26 @@
 import * as React from 'react'
-import { ChangeEvent, useEffect, useReducer, useState } from 'react'
+import {ChangeEvent, useEffect, useReducer, useState} from 'react'
 import ResourceCandyBar from '../candyBar/ResourceCandyBar'
 import ResourceModel from '../../store/ResourceModel'
-import { useMutation, useQuery } from '@apollo/client'
-import { CREATE_RESOURCE } from '../../store/site/Mutations/CREATE_RESOURCE'
-import { FETCH_RESOURCES } from '../../store/site/Queries/FETCH_RESOURCES'
+import {useMutation} from '@apollo/client'
+import {CREATE_RESOURCE} from '../../store/site/Mutations/CREATE_RESOURCE'
+import {FETCH_RESOURCES} from '../../store/site/Queries/FETCH_RESOURCES'
 import AddResourceIcon from '../../icons/AddResource'
-import { Transition } from '@headlessui/react'
-import { Scrollbar } from 'react-scrollbars-custom'
-import { DELETE_RESOURCE } from '../../store/site/Mutations/DELETE_RESOURCE'
-
+import {Transition} from '@headlessui/react'
+import {Scrollbar} from 'react-scrollbars-custom'
+import {DELETE_RESOURCE} from '../../store/site/Mutations/DELETE_RESOURCE'
 
 export interface Props {
   title: string
+  tab: number
+  card: number
+  data: ResourceModel[] | undefined
   className?: string
-}
-
-export interface ResourceData {
-  resources: ResourceModel[]
 }
 
 const ResourceCard: React.FC<Props> = (props) => {
   let textInput: { focus: () => void } | null = null
   const [showAdd, toggleAdd] = useState(false)
-
-  const { loading, error, data } = useQuery<ResourceData>(FETCH_RESOURCES)
 
   const [showMenu, setMenuVisibility] = useState(-1)
 
@@ -102,7 +98,7 @@ const ResourceCard: React.FC<Props> = (props) => {
 
   const handleSubmit = () => {
     if (resource.url.startsWith('http')) {
-      createResource({ variables: { title: resource.title, url: resource.url } })
+      createResource({ variables: { title: resource.title, url: resource.url, tab: props.tab, card: props.card } })
         .then(({ data }) => {
           // console.log(data)
         })
@@ -146,7 +142,7 @@ const ResourceCard: React.FC<Props> = (props) => {
         leaveTo="transform opacity-0 scale-95"
       >
         {(ref) => (
-          <div   className="resourceForm addResource">
+          <div   className="resourceForm addResource ">
             <div id={'addForm'} className={'addResourceForm'}>
               <input
                 id="resourceTitleInput"
@@ -179,8 +175,8 @@ const ResourceCard: React.FC<Props> = (props) => {
 
       <Scrollbar id={'Addresource'} style={{ width: 312, height: 768 }}>
         <div className={'h-full resources'}>
-          {data
-            ? data.resources
+          {props.data
+            ? props.data
                 .slice()
                 .sort((a, b) => {
                   return b.id - a.id
@@ -188,11 +184,10 @@ const ResourceCard: React.FC<Props> = (props) => {
                 .map((resource: ResourceModel) => (
                   <ResourceCandyBar
                     key={resource.id}
-                    id={resource.id}
-                    active={showAdd}
-                    status={resource.status}
-                    url={resource.url}
-                    title={resource.title}
+                    resource={resource}
+                    tab={props.tab}
+                    card={props.card}
+                    active={showMenu}
                     showMenu={showMenu == resource.id}
                     callback={handleMenuClick}
                   />

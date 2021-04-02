@@ -12,12 +12,12 @@ public class ResourceMutationResolver implements GraphQLMutationResolver {
 
     private final ResourceService resourceService;
 
-    public Iterable<Resource> createResource(String title, String url) {
-        return resourceService.createResource(title, url);
+    public Iterable<Resource> createResource(String title, String url, int tab, int card) {
+        return resourceService.createResource(title, url, tab, card );
     }
 
-    public Resource updateResource(Long id, String title, String url) throws NotFoundException {
-        return resourceService.updateResource(id, title, url);
+    public Resource updateResource(Long id, String title, String url, int tab, int card) throws NotFoundException {
+        return resourceService.updateResource(id, title, url, tab, card);
     }
 
     public boolean deleteResource(Long id) { return resourceService.deleteResource(id);}

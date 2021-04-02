@@ -21,23 +21,40 @@ public class Resource {
     private String url;
 
     private int status;
+    private int tab;
+    private int card;
+    private int clickies;
 
 
-    public Resource(Long id, String title, String url, int status) {
+    public Resource(Long id, String title, String url, int status, int tab, int card, int clickies) {
         this.id = id;
         this.title = title;
         this.url = url;
         this.status = status;
+        this.tab = tab;
+        this.card = card;
+        this.clickies = clickies;
     }
 
-    public Resource(String title, String url, int status) {
+    public Resource(String title, String url, int status, int tab, int card, int clickies) {
         this.title = title;
         this.url = url;
         this.status = status;
+        this.tab = tab;
+        this.card = card;
+        this.clickies = clickies;
     }
 
-    public Resource(String title, String url) {
+    public Resource(Long id, String title, String url) {
+        this.id = id;
         this.title = title;
         this.url = url;
+    }
+
+    public Resource(String title, String url, int tab, int card) {
+        this.title = title;
+        this.url = url;
+        this.tab = tab;
+        this.card = card;
     }
 }

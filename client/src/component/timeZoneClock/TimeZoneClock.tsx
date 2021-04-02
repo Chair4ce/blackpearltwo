@@ -41,7 +41,7 @@ const TimeZoneClock: React.FC<Props> = (props) => {
     }, [])
 
     return <div className="flex flex-row justify-evenly">
-        <a className="atoDay text-white text-4xl leading-10">{ato}</a>
+        <h1 className="atoDay text-white text-4xl leading-10 antialiased">{ato}</h1>
         <div className="timeZoneCol flex flex-col items-center">
             <a className="tzTitle text-sm">LANGLEY</a>
             <a className="tzTime text-white text-sm">

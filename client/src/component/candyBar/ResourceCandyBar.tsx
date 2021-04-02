@@ -2,18 +2,17 @@ import * as React from 'react'
 import {ChangeEvent, useEffect, useReducer, useState} from 'react'
 import GlobeIcon from '../../icons/Globe'
 import ClickAwayListener from 'react-click-away-listener'
-import { Transition } from '@headlessui/react'
-import classNames from 'classnames'
-import { useMutation } from '@apollo/client'
-import { FETCH_RESOURCES } from '../../store/site/Queries/FETCH_RESOURCES'
-import { UPDATE_RESOURCE } from '../../store/site/Mutations/EDIT_RESOURCE'
+import {Transition} from '@headlessui/react'
+import {useMutation} from '@apollo/client'
+import {FETCH_RESOURCES} from '../../store/site/Queries/FETCH_RESOURCES'
+import {UPDATE_RESOURCE} from '../../store/site/Mutations/EDIT_RESOURCE'
+import ResourceModel from "../../store/ResourceModel";
 
 export interface Props {
-  active: boolean
-  id: number
-  url: string
-  title: string
-  status: number
+  active: number
+  resource: ResourceModel
+  tab: number
+  card: number
   showMenu: boolean
   callback: (index: number, reset?: boolean, action?: string) => void
   className?: string
@@ -48,7 +47,7 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
       props.callback(id)
     } else {
       if (action) {
-        props.callback(props.id, true, action)
+        props.callback(props.resource.id, true, action)
       }
       props.callback(-1, true)
     }
@@ -57,7 +56,7 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
   const handleSubmit = () => {
     console.log('submitting')
     if (resource.url.startsWith('http')) {
-      updateResource({ variables: { id: props.id, title: resource.title, url: resource.url } })
+      updateResource({ variables: { id: props.resource.id, title: resource.title, url: resource.url, tab: props.tab, card: props.card } })
         .then(({ data }) => {
           console.log(data)
         })
@@ -74,20 +73,16 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
     setResource('')
   }
   function handleEdit() {
-    setResource({ ['title']: props.title })
-    setResource({ ['url']: props.url })
     props.callback(-1, true)
     toggleEdit((prev) => !prev)
+    setResource({ ['title']: props.resource.title })
+    setResource({ ['url']: props.resource.url })
   }
 
   const handleClickAway = () => {
     props.callback(-1, true)
   }
 
-  const handleEditFormClickAway = () => {
-    toggleEdit((prev) => !prev)
-    setResource('')
-  }
 
   useEffect(() => {
     setTimeout(() => {
@@ -113,66 +108,18 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
         element!.scrollIntoView()
 
       }
-    }, 25)
+    }, 905)
 
     return function cleanup() {
 
     };
   }, [props.showMenu])
 
-  return (
-    <>
-      <Transition
-        show={showEdit}
-        enter="transition ease-out duration-300"
-        enterFrom="transform opacity-0 scale-95"
-        enterTo="transform opacity-100 scale-100"
-        // leave="transition ease-in duration-75"
-        // leaveFrom="transform opacity-100 scale-100"
-        // leaveTo="transform opacity-0 scale-95"
-      >
-        {(ref) => (
-          <div id={'editResourceForm'} className="resourceForm editResource mb-2 mt-2">
-            <div className={'editResourceForm'}>
-              <input
-                  id="resourceTitleInput"
-                type="text"
-                name="title"
-                placeholder="title"
-                value={resource.title}
-                onChange={(e) => handleChangeValue(e)}
-                className="textInput border rounded-sm border-gray-300 p-2 h-8 w-full mb-1 focus:outline-none"
-              />
-              <textarea
-                name="url"
-                placeholder="url"
-                value={resource.url}
-                onChange={(e) => handleChangeValue(e)}
-                className="textInput border app w-full p-2 max-h-60 focus:outline-none rounded-sm"
-              />
-            </div>
-            <div className="resourceFormBtn flex w-full h-10 mt-1">
-              <button className={'cancelBtn actionResourceBtn'} onClick={() => handleCancel()}>
-                <a>CANCEL</a>
-              </button>
-              <button className={'saveBtn actionResourceBtn ml-1'} onClick={() => handleSubmit()}>
-                <a>SAVE</a>
-              </button>
-            </div>
-          </div>
-        )}
-      </Transition>
 
-      <Transition
-          show={!showEdit}
-          enter="transition ease-out duration-300"
-          enterFrom="transform opacity-0 scale-95"
-          enterTo="transform opacity-100 scale-100"
-          // leave="transition ease-in duration-75"
-          // leaveFrom="transform opacity-100 scale-100"
-          // leaveTo="transform opacity-0 scale-95"
-      >
-        {(ref) => (
+
+  return (
+    <React.Fragment>
+
         <div
           data-testid="CandyBarWrapper "
           className="candyBarWrapper block w-full rounded-sm mt-1 mr-0 mb-1 ml-0"
@@ -181,16 +128,16 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
             <div data-testid="CandyBarInfo" className="candyBarInfo block rounded-sm   ">
               <a
                 className="candyBarTargetLink flex rounded-sm items-center justify-start w-full h-full space-x-1"
-                href={props.url}
+                href={props.resource.url}
                 target={'_blank'}
-                title={props.title}
-                onClick={() => props.callback(-1, true)}
+                title={props.resource.title}
               >
                 <div className="candyBarInfocon ">
-                  <GlobeIcon status={props.status === 200} />
+                  <GlobeIcon status={props.resource.status === 200} />
                 </div>
-                <h2>{props.title}</h2>
+                <h2>{props.resource.title}</h2>
               </a>
+
             </div>
 
             <div className="candyBarMenu rounded-sm flex items-center">
@@ -201,12 +148,13 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
               <div className="relative inline-block text-left">
                 <div>
                   <button
+                      // disabled={props.active}
                     type="button"
                     className="candyBarMenuBtn focus:outline-none flex items-center justify-center rounded-md"
                     id="options-menu"
                     aria-expanded="true"
                     aria-haspopup="true"
-                    onClick={() => handleClick(props.id)}
+                    onClick={() => handleClick(props.resource.id)}
                   >
                     <svg
                       className=" h-5 w-5"
@@ -229,9 +177,6 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
                   enter="transition ease-out duration-100"
                   enterFrom="transform opacity-0 scale-95"
                   enterTo="transform opacity-100 scale-100"
-                  leave="transition ease-in duration-75"
-                  leaveFrom="transform opacity-100 scale-100"
-                  leaveTo="transform opacity-0 scale-95"
                 >
                   {(ref) => (
                     <ClickAwayListener onClickAway={handleClickAway}>
@@ -255,7 +200,7 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
                             href="#"
                             className="menuItem block px-4 py-2 text-sm text-gray-700 hover:text-gray-900"
                             role="menuitem"
-                            onClick={() => handleClick(props.id, 'delete')}
+                            onClick={() => handleClick(props.resource.id, 'delete')}
                           >
                             Delete
                           </a>
@@ -268,9 +213,42 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
             </div>
           </div>
         </div>
-        )}
-      </Transition>
-    </>
+
+
+
+
+      {showEdit &&
+            <div id={'editResourceForm'} className="resourceForm editResource mb-2 mt-2">
+              <div className={'editResourceForm'}>
+                <input
+                    id="resourceTitleInput"
+                    type="text"
+                    name="title"
+                    placeholder="title"
+                    value={resource.title}
+                    onChange={(e) => handleChangeValue(e)}
+                    className="textInput border rounded-sm border-gray-300 p-2 h-8 w-full mb-1 focus:outline-none"
+                />
+                <textarea
+                    name="url"
+                    placeholder="url"
+                    value={resource.url}
+                    onChange={(e) => handleChangeValue(e)}
+                    className="textInput border app w-full p-2 max-h-60 focus:outline-none rounded-sm"
+                />
+              </div>
+              <div className="resourceFormBtn flex w-full h-10 mt-1">
+                <button className={'cancelBtn actionResourceBtn'} onClick={() => handleCancel()}>
+                  <a>CANCEL</a>
+                </button>
+                <button className={'saveBtn actionResourceBtn ml-1'} onClick={() => handleSubmit()}>
+                  <a>SAVE</a>
+                </button>
+              </div>
+            </div>
+        }
+
+    </React.Fragment>
   )
 }
 

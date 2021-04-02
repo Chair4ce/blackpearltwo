@@ -4,5 +4,8 @@ query {
         title
         url
         status
+        tab
+        card
+        clickies
     }
 }

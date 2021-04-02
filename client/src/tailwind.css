@@ -16,7 +16,7 @@ code {
 
 #root {
   background: #2F343B;
-  height: 100vh;
+  height: calc(100vh - 20px);
 }
 
 .app {
@@ -115,6 +115,10 @@ code {
   font-weight: 500;
 }
 
+.atoDay {
+  text-shadow: 2px 2px 4px #000000;
+}
+
 
 .resourceCard {
   max-height: 808px;
@@ -148,6 +152,10 @@ code {
   color: white;
 }
 
+.resourceTab {
+
+}
+
 .resourceColumn {
   display: flex;
   cursor: pointer;
@@ -156,7 +164,7 @@ code {
   /*background: #2a2a35;*/
   background: linear-gradient(180deg, rgba(27, 27, 30, 0.79) 0%, rgba(27, 27, 30, 0.25) 100%);
   border-radius: 3px;
-  max-width: 318px;
+  width: 318px;
   padding: 2px;
   overflow-y: hidden;
 }
