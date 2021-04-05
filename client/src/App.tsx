@@ -22,24 +22,24 @@ function App() {
                 <DrawerIcon className="relative float-right top-2 right-2 "/>
                 <Pearlogo/>
             </div>
-            <div className="mainView h-full w-full">
-                <div className="header flex items-start h-11 w-full">
+            <div className="mainView flex flex-col flex-shrink h-full w-full">
+                <div className="header flex flex-row flex-shrink items-start h-11 w-full">
                     <TimeZoneClock/>
                 </div>
 
 
-                <div className="resourceTab w-full block ml-1">
-                    <div className="resourceTabHeader flex items-start w-full h-8 ml-1">
+                <div className="resourceTab flex flex-col flex-shrink  w-full block ml-1">
+                    <div className="resourceTabHeader flex flex-shrink items-start w-full h-8 ml-1">
                         <h3 className="text-white ">FMV</h3>
                     </div>
-                    <div className="resourceColumns flex items-start p-1">
-                        <div className="resourceColumn mr-1">
+                    <div className="resourceColumns flex flex-row flex-shrink flex-grow p-1">
+                        <div className="resourceColumn flex flex-col flex-shrink flex-grow justify-start cursor-pointer rounded-sm overflow-y-hidden mr-1 p-0.5">
                             <ResourceCard title="Main" data={data?.resources.filter((m: ResourceModel) => m.card === 0)} tab={0} card={0}/>
                         </div>
-                        <div className="resourceColumn mr-1">
+                        <div className="resourceColumn flex flex-col flex-shrink flex-grow justify-start cursor-pointer rounded-sm overflow-y-hidden mr-1 p-0.5">
                             <ResourceCard title="Situation Awareness" data={data?.resources.filter((m: ResourceModel) => m.card === 1)} tab={0} card={1}/>
                         </div>
-                        <div className="resourceColumn mr-1">
+                        <div className="resourceColumn flex flex-col flex-shrink flex-grow justify-start cursor-pointer rounded-sm overflow-y-hidden mr-1 p-0.5">
                             <ResourceCard title="Target Research" data={data?.resources.filter((m: ResourceModel) => m.card === 2)} tab={0} card={2}/>
                         </div>
                     </div>

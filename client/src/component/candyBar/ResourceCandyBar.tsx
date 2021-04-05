@@ -119,15 +119,14 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
 
   return (
     <React.Fragment>
-
         <div
           data-testid="CandyBarWrapper "
-          className="candyBarWrapper block w-full rounded-sm mt-1 mr-0 mb-1 ml-0"
+          className="candyBarWrapper flex flex-row flex-shrink h-9 w-full rounded-sm mt-1 mr-0 mb-1 ml-0"
         >
-          <div className="flex items-center justify-center h-full w-full pr-0.5">
-            <div data-testid="CandyBarInfo" className="candyBarInfo block rounded-sm   ">
+          <div className="flex items-center justify-between h-full w-full pr-0.5">
+            <div data-testid="CandyBarInfo" className="candyBarInfo flex min-w-0 rounded-sm flex-grow">
               <a
-                className="candyBarTargetLink flex rounded-sm items-center justify-start w-full h-full space-x-1"
+                className="candyBarTargetLink hover:bg-gray-800 flex min-w-0 rounded-sm items-center h-full"
                 href={props.resource.url}
                 target={'_blank'}
                 title={props.resource.title}
@@ -135,16 +134,11 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
                 <div className="candyBarInfocon ">
                   <GlobeIcon status={props.resource.status === 200} />
                 </div>
-                <h2>{props.resource.title}</h2>
+                <h2 className="truncate text-white font-bold w-56">{props.resource.title}</h2>
               </a>
-
             </div>
 
-            <div className="candyBarMenu rounded-sm flex items-center">
-              {/*<button className="candyBarMenuButton flex justify-center items-center border-0 outline-none bg-transparent w-12 h-full">*/}
-              {/*  <ThreeDotIcon />*/}
-              {/*</button>*/}
-
+            <div className="candyBarMenu rounded-sm flex items-center flex-grow-0 flex-shrink-0">
               <div className="relative inline-block text-left">
                 <div>
                   <button
@@ -213,10 +207,6 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
             </div>
           </div>
         </div>
-
-
-
-
       {showEdit &&
             <div id={'editResourceForm'} className="resourceForm editResource mb-2 mt-2">
               <div className={'editResourceForm'}>
