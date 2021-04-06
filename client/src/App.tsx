@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import ResourceCard from "./component/resourceCard/resourceCard";
 import classNames from "classnames";
 import TimeZoneClock from "./component/timeZoneClock/TimeZoneClock";
 import ResourceModel from "./store/ResourceModel";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { FETCH_RESOURCES } from "./store/site/Queries/FETCH_RESOURCES";
 import MenuBtn from "./icons/menuBtn";
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext, DropResult } from "react-beautiful-dnd";
+import { UPDATE_RESOURCE } from "./store/site/Mutations/EDIT_RESOURCE";
+import { EDIT_RESOURCE_CARD } from "./store/site/Mutations/EDIT_RESOURCE_CARD";
 
 export interface ResourceData {
     resources: ResourceModel[]
@@ -15,8 +17,13 @@ export interface ResourceData {
 function App() {
     const {loading, error, data} = useQuery<ResourceData>(FETCH_RESOURCES)
 
-
-
+    const [editResourceCard] = useMutation(EDIT_RESOURCE_CARD, {
+        refetchQueries: [
+            {
+                query: FETCH_RESOURCES,
+            },
+        ],
+    })
 
     const menuBtn =
         document.querySelector(".menu-btn");
@@ -63,6 +70,20 @@ function App() {
         }
     }
 
+
+    function dragEnd(r: DropResult) {
+        console.log(r.draggableId);
+        if(r.destination?.droppableId) {
+        editResourceCard({ variables: { id: r.draggableId, card: r.destination?.droppableId } })
+          .then(({ data }) => {
+              console.log(data)
+          })
+          .catch((e: any) => {
+
+          })
+        }
+    }
+
     return (
         <div data-testid="App" className={classNames('app flex')}>
             <div className="widgetDrawer">
@@ -79,7 +100,11 @@ function App() {
                     <div className="resourceTabHeader flex flex-shrink items-start w-full h-8 ml-1">
                         <h3 className="text-white ">FMV</h3>
                     </div>
+
+                    <DragDropContext onDragEnd={(r) => dragEnd(r)} >
                     <div className="resourceColumns flex flex-row flex-shrink flex-grow p-1">
+
+
                         <div
                             className="resourceColumn flex flex-col flex-shrink flex-grow justify-start cursor-pointer rounded-sm overflow-y-hidden mr-1 p-0.5">
                             <ResourceCard title="Main" data={data?.resources.filter((m: ResourceModel) => m.card === 0)}
@@ -97,7 +122,12 @@ function App() {
                                           data={data?.resources.filter((m: ResourceModel) => m.card === 2)} tab={0}
                                           card={2}/>
                         </div>
+
+
                     </div>
+
+
+                    </DragDropContext>
                 </div>
             </div>
         </div>

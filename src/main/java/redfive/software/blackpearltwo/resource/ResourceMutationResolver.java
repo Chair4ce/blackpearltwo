@@ -20,5 +20,9 @@ public class ResourceMutationResolver implements GraphQLMutationResolver {
         return resourceService.updateResource(id, title, url, tab, card);
     }
 
+    public Resource editResourceCard(Long id, int card, int pos) throws NotFoundException {
+        return resourceService.editResourceCard(id, card, pos);
+    }
+
     public boolean deleteResource(Long id) { return resourceService.deleteResource(id);}
 }

@@ -125,106 +125,106 @@ const ResourceCard: React.FC<Props> = (props) => {
   }
 
   return (
-    <div data-testid="ResourceCard" className="resourceCard flex flex-col flex-shrink flex-grow flex-grow h-screen ">
-      <div className="resourceColumnHeader flex flex-row w-full sticky h-10 rounded-sm">
-        <h2
-          className="font-bold text-left min-w-0 truncate text-xl w-full h-full ml-4 leading-10 text-white">{props.title}</h2>
-        <div className="cardActions flex justify-center items-center w-20 h-10">
-          <button
-            className="addResourceBtn flex hover:bg-gray-700 border-none outline-none cursor-pointer w-20 h-8 mr-1 rounded-sm justify-evenly items-center bg-transparent"
-            onClick={handleAdd}>
-            <a>Add</a>
-            <AddResourceIcon />
-          </button>
-        </div>
-      </div>
 
-      <Transition
-        show={showAdd}
-        enter="transition ease-out duration-300"
-        enterFrom="transform opacity-0 scale-95"
-        enterTo="transform opacity-100 scale-100"
-        leave="transition ease-in duration-75"
-        leaveFrom="transform opacity-100 scale-100"
-        leaveTo="transform opacity-0 scale-95"
-      >
-        {(ref) => (
-          <div className="resourceForm addResource flex flex-col flex-shrink rounded-sm p-0.5 ">
-            <div id={"addForm"} className={"addResourceForm"}>
-              <input
-                id="resourceTitleInput"
-                type="text"
-                name="title"
-                placeholder="title"
-                value={resource.name}
-                onChange={(e) => handleChangeValue(e)}
-                className="textInput border border-gray-300 p-2 h-8 w-full mb-1 rounded-sm focus:outline-none"
-              />
-              <textarea
-                name="url"
-                placeholder="url"
-                onKeyDown={(e) => handleKeyDown(e)}
-                onChange={(e) => handleChangeValue(e)}
-                className="textInput border app w-full  p-2 h-full max-h-80 focus:outline-none rounded-sm"
-              ></textarea>
-            </div>
-            <div className="resourceFormBtn flex w-full items-center h-10 mt-1">
-              <button className="cancelBtn actionResourceBtn" onClick={handleAdd}>
-                <a>CANCEL</a>
-              </button>
-              <button className="saveBtn actionResourceBtn" onClick={handleSubmit}>
-                <a>SAVE</a>
-              </button>
-            </div>
-          </div>
-        )}
-      </Transition>
+      <Droppable droppableId={props.card.toString()}>
+        {(provided) => {
+          return (
+            <div data-testid="ResourceCard"
+                 className="resourceCard flex flex-col flex-shrink flex-grow flex-grow h-screen ">
+              <div className="resourceColumnHeader flex flex-row w-full sticky h-10 rounded-sm">
+                <h2
+                  className="font-bold text-left min-w-0 truncate text-xl w-full h-full ml-4 leading-10 text-white">{props.title}</h2>
+                <div className="cardActions flex justify-center items-center w-20 h-10">
+                  <button
+                    className="addResourceBtn flex hover:bg-gray-700 border-none outline-none cursor-pointer w-20 h-8 mr-1 rounded-sm justify-evenly items-center bg-transparent"
+                    onClick={handleAdd}>
+                    <a>Add</a>
+                    <AddResourceIcon />
+                  </button>
+                </div>
+              </div>
 
-      {/*<Scrollbar className="w-full h-full">*/}
+              <Transition
+                show={showAdd}
+                enter="transition ease-out duration-300"
+                enterFrom="transform opacity-0 scale-95"
+                enterTo="transform opacity-100 scale-100"
+                leave="transition ease-in duration-75"
+                leaveFrom="transform opacity-100 scale-100"
+                leaveTo="transform opacity-0 scale-95"
+              >
+                {(ref) => (
+                  <div className="resourceForm addResource flex flex-col flex-shrink rounded-sm p-0.5 ">
+                    <div id={"addForm"} className={"addResourceForm"}>
+                      <input
+                        id="resourceTitleInput"
+                        type="text"
+                        name="title"
+                        placeholder="title"
+                        value={resource.name}
+                        onChange={(e) => handleChangeValue(e)}
+                        className="textInput border border-gray-300 p-2 h-8 w-full mb-1 rounded-sm focus:outline-none"
+                      />
+                      <textarea
+                        name="url"
+                        placeholder="url"
+                        onKeyDown={(e) => handleKeyDown(e)}
+                        onChange={(e) => handleChangeValue(e)}
+                        className="textInput border app w-full  p-2 h-full max-h-80 focus:outline-none rounded-sm"
+                      ></textarea>
+                    </div>
+                    <div className="resourceFormBtn flex w-full items-center h-10 mt-1">
+                      <button className="cancelBtn actionResourceBtn" onClick={handleAdd}>
+                        <a>CANCEL</a>
+                      </button>
+                      <button className="saveBtn actionResourceBtn" onClick={handleSubmit}>
+                        <a>SAVE</a>
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </Transition>
+
+              {/*<Scrollbar className="w-full h-full">*/}
 
 
-      <DragDropContext onDragEnd={drop}>
-        <Droppable droppableId={props.card.toString()} >
-          {(provided) =>
-            {
-            return (
               <div {...provided.droppableProps} ref={provided.innerRef}
-                 className="flex flex-col flex-shrink flex-grow h-screen w-full resources pl-0.3">
-              {props.data
-                ? props.data
-                  // .slice()
-                  // .sort((a, b) => {
-                  //   return b.id - a.id;
-                  // })
-                  .map((resource: ResourceModel, index: number) =>
-                    <Draggable key={resource.id} draggableId={resource.id.toString()} index={index}>
-                      {(provided) => {
-                        return (
-                          <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                            <ResourceCandyBar
-                              key={resource.id}
-                              resource={resource}
-                              index={index}
-                              tab={props.tab}
-                              card={props.card}
-                              active={showMenu}
-                              showMenu={showMenu == resource.id}
-                              callback={handleMenuClick}
-                            />
-                          </div>
-                        );
-                      }}
-                    </Draggable>
-                  )
-                : null}
+                   className="flex flex-col flex-shrink flex-grow h-screen w-full resources pl-0.3">
+                {props.data
+                  ? props.data
+                    // .slice()
+                    // .sort((a, b) => {
+                    //   return b.id - a.id;
+                    // })
+                    .map((resource: ResourceModel, index: number) =>
+                      <Draggable key={resource.id} draggableId={resource.id.toString()} index={index}>
+                        {(provided) => {
+                          return (
+                            <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                              <ResourceCandyBar
+                                key={resource.id}
+                                resource={resource}
+                                index={index}
+                                tab={props.tab}
+                                card={props.card}
+                                active={showMenu}
+                                showMenu={showMenu == resource.id}
+                                callback={handleMenuClick}
+                              />
+                            </div>
+                          );
+                        }}
+                      </Draggable>
+                    )
+                  : null}
                 {provided.placeholder}
+              </div>
+              {/*</Scrollbar>*/}
             </div>
-            )}
-          }
-        </Droppable>
-      </DragDropContext>
-      {/*</Scrollbar>*/}
-    </div>
+          );
+        }
+        }
+      </Droppable>
   );
 };
 

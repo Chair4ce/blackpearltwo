@@ -36,12 +36,14 @@ public class ResourceService {
 
     public Iterable<Resource> createResource(String title, String url, int tab, int card) {
         Resource resource = new Resource(title, url, tab, card);
-        Link preview = getLinkPreviewInfo(url);
-        if(preview != null) {
-        resource.setStatus(preview.getStatus());
-        linkRepository.save(preview);
-        }
+        int resources = resourceRepository.countAllByCard(card);
 
+        Link preview = getLinkPreviewInfo(url);
+        if (preview != null) {
+            resource.setStatus(preview.getStatus());
+            linkRepository.save(preview);
+        }
+        resource.setPos(resources + 1);
         resourceRepository.save(resource);
         return resourceRepository.findAll();
     }
@@ -74,6 +76,20 @@ public class ResourceService {
 
             resourceRepository.save(resource);
             return resource;
+        }
+        throw new javassist.NotFoundException("No site to update!");
+    }
+
+    public Resource editResourceCard(Long id, int card, int pos) throws javassist.NotFoundException {
+
+        if (resourceRepository.findById(id).isPresent()) {
+            int DestinationCardCount = resourceRepository.countAllByCard(card);
+            Resource editingResource = resourceRepository.findById(id).orElseThrow(RuntimeException::new);
+
+
+
+            resourceRepository.save(editingResource);
+            return editingResource;
         }
         throw new javassist.NotFoundException("No site to update!");
     }

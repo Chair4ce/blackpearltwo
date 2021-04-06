@@ -5,4 +5,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ResourceRepository extends JpaRepository<Resource, Long> {
+
+    int countAllByCard( int cardId);
+    Resource findByCardAndPos(int card, int pos);
+
 }
