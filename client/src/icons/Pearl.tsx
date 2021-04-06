@@ -1,9 +1,12 @@
 import * as React from 'react'
+import classNames from "classnames";
+export interface Props {
+    className?: string
+}
 
-
-const Pearlogo: React.FC = () => {
+const Pearlogo: React.FC<Props> = (props) => {
     return (
-        <div data-testid="Pearlogo" className="pearlogo">
+        <div data-testid="Pearlogo" className={classNames("pearlogo", props.className)}>
             <svg width="307" height="111" viewBox="0 0 307 111" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g opacity="0.5">
                     <path fillRule="evenodd" clipRule="evenodd" d="M99.6363 53.8182C99.6363 83.5411 123.732 107.636 153.455 107.636C183.178 107.636 207.273 83.5411 207.273 53.8182C207.273 24.0952 183.178 0 153.455 0C123.732 0 99.6363 24.0952 99.6363 53.8182ZM158.375 94.1049C133.068 94.1049 112.553 73.5896 112.553 48.2826C112.553 37.1838 116.499 27.0065 123.064 19.0773C113.595 27.5255 107.632 39.8218 107.632 53.5106C107.632 78.9875 128.285 99.6405 153.762 99.6405C169.531 99.6405 183.452 91.7285 191.771 79.6578C183.413 88.5509 171.542 94.1049 158.375 94.1049Z" fill="url(#paint0_radial)"/>

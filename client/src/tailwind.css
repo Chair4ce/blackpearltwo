@@ -3,29 +3,34 @@
 @tailwind utilities;
 
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
     'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 #root {
-  background: #2F343B;
-  height: calc(100vh - 20px);
+    background: #2F343B;
+    height: calc(100vh - 20px);
 }
 
 .app {
 }
 
 .widgetDrawer {
-  height: 892px;
-  width: 319px;
-  background: linear-gradient(180deg, rgba(27, 27, 30, 0.79) 0%, rgba(27, 27, 30, 0.25) 100%);
+    height: 892px;
+    width: 60px;
+    z-index: 1000;
+    /*background: linear-gradient(90deg, rgba(27, 27, 30, 0.99) 0%, rgba(27, 27, 30, 0.25) 100%);*/
+    background: #2f2f2f;
+    -webkit-box-shadow: 9px 0px 5px -2px rgba(0,0,0,0.22);
+    -moz-box-shadow: 9px 0px 5px -2px rgba(0,0,0,0.22);
+    box-shadow: 9px 0px 5px -2px rgba(0,0,0,0.22);
 }
 
 /*//Resource Column*/
@@ -33,169 +38,240 @@ code {
 
 
 .candyBarMenuBtn {
-  width: 28px;
-  height: 26px;
+    width: 28px;
+    height: 26px;
 }
 
 .candyBarWrapper {
-  background: #373f51;
+    background: #373f51;
 }
 
 .candyBarMenuButton:focus {
-  outline: thin dotted;
+    outline: thin dotted;
 }
 
 .candyBarMenuButton {
-  min-width: 28px;
+    min-width: 28px;
 }
 
 .candyBarMenu {
-  width: 28px;
-  height: 26px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 2px;
+    width: 28px;
+    height: 26px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2px;
 }
 
 .candyBarMenu:hover {
-  background: #4f4f4f;
+    background: #4f4f4f;
 }
 
 .candyBarInfo {
-  height: 26px;
+    height: 26px;
 }
+
 .candyBarInfo:hover {
-  background: #464646;
-  /*width: 75%;*/
+    background: #464646;
+    /*width: 75%;*/
 }
 
 
 .resourceLinkFrame {
-  position: absolute;
-  width: 275px;
-  height: 32px;
+    position: absolute;
+    width: 275px;
+    height: 32px;
 }
 
 .tzTitle {
-  color: #76ACED;
-  font-weight: 500;
+    color: #76ACED;
+    font-weight: 500;
 }
 
 .atoDay {
-  text-shadow: 2px 2px 4px #000000;
+    text-shadow: 2px 2px 4px #000000;
 }
 
 
 .resourceCard {
-  max-height: 808px;
+    max-height: 808px;
+
 }
 
 .pearlogo {
-  position: relative;
-  top: 19px;
+    position: relative;
+    top: 19px;
 }
 
 
 .resourceColumnHeader {
-  top: 0;
-  background: #1B1B1E;
+    top: 0;
+    background: #1B1B1E;
 }
 
 .resourceColumn {
-  background: linear-gradient(180deg, rgba(27, 27, 30, 0.79) 0%, rgba(27, 27, 30, 0.25) 100%);
+    min-width: 180px;
+    background: linear-gradient(180deg, rgba(27, 27, 30, 0.79) 0%, rgba(27, 27, 30, 0.25) 100%);
 }
 
 
-.addResourceBtn  {
+.addResourceBtn {
 }
 
 
 .actionResourceBtn {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  border-radius: 3px;
-  width: 64px;
-  height: 30px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+    width: 64px;
+    height: 30px;
 
 }
 
 .menuItem:hover {
-  background: #484848;
+    background: #484848;
 }
 
 .trashIcon {
 }
 
 .saveBtn {
-  color: #333333;
-  background: #6C9CD5;
-  font-weight: bold;
+    color: #333333;
+    background: #6C9CD5;
+    font-weight: bold;
 }
 
 .cancelBtn {
-  background: #333333;
-  color: #6C9CD5;
-  font-weight: bold;
-  width: 76px;
+    background: #333333;
+    color: #6C9CD5;
+    font-weight: bold;
+    width: 76px;
 }
 
 .saveBtn:hover {
-  background: #4a4a4a;
-  transition: background-color .3s ease-in-out;
+    background: #4a4a4a;
+    transition: background-color .3s ease-in-out;
 }
 
 .saveBtn:focus {
-  outline: thin dotted;
+    outline: thin dotted;
 }
 
 .cancelBtn:hover {
-  background: #4a4a4a;
-  transition: background-color .3s ease-in-out;
+    background: #4a4a4a;
+    transition: background-color .3s ease-in-out;
 }
 
 .textInput {
-  border: none;
-  color: white;
-  background: #2f2f2f;
+    border: none;
+    color: white;
+    background: #2f2f2f;
 }
 
 .resourceActionMenu {
-  box-shadow: 0 3px 8px rgba(0, 0, 0, .75);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, .75);
 }
 
 .actionResourceBtn:focus {
-  outline:0;
+    outline: 0;
 }
 
 .editResource {
-  background: #373f51;
+    background: #373f51;
 }
 
 .resourceFormBtn {
-  justify-content: space-evenly;
+    justify-content: space-evenly;
 }
 
 .addResourceBtn a {
-  color: white;
+    color: white;
 }
 
 .addResourceForm {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
+
 .candyBarWrapperDisabled {
-  background: #000000;
-  position: absolute;
-  opacity: 50%;
-  height: 32px;
-  width: 310px;
-  margin: 2px 0 2px 0;
-  border-radius: 3px;
+    background: #000000;
+    position: absolute;
+    opacity: 50%;
+    height: 32px;
+    width: 310px;
+    margin: 2px 0 2px 0;
+    border-radius: 3px;
 }
 
 /*--------------------------------------------------*/
+
+.menu-btn {
+    position: relative;
+    z-index: 3;
+    right: 15px;
+    top: 15px;
+    cursor: pointer;
+    transition: all 300ms ease-out;
+}
+
+.widgetDrawer {
+    position: absolute;
+    left: 0;
+    top: 0;
+    min-width: 60px;
+    transition: all 300ms ease-out;
+}
+
+.mainView {
+    margin-left: 60px;
+}
+
+.pearlogo {
+    display: none;
+    transition: all 300ms ease-out;
+    transition-delay: 400ms;
+}
+
+.hidepearlogo {
+    display: flex;
+}
+
+.widgetOpened {
+    width: 419px;
+}
+
+/* Styling the hamburger lines */
+.menu-btn .btn-line {
+    width: 28px;
+    height: 3px;
+    margin: 0 0 5px 0;
+    background: #ffffff;
+    transition: all 300ms ease-out;
+}
+
+/* Adding tranform to the X */
+.menu-btn.close {
+    top: 8px;
+    transform: rotate(180deg);
+}
+
+/* Styling the three lines to make it an X */
+.menu-btn.close .btn-line:nth-child(1) {
+
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.menu-btn.close .btn-line:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-btn.close .btn-line:nth-child(3) {
+
+    transform: rotate(-45deg) translate(7px, -6px);
+}
+
+

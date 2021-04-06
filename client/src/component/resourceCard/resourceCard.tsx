@@ -7,7 +7,6 @@ import {CREATE_RESOURCE} from '../../store/site/Mutations/CREATE_RESOURCE'
 import {FETCH_RESOURCES} from '../../store/site/Queries/FETCH_RESOURCES'
 import AddResourceIcon from '../../icons/AddResource'
 import {Transition} from '@headlessui/react'
-import {Scrollbar} from 'react-scrollbars-custom'
 import {DELETE_RESOURCE} from '../../store/site/Mutations/DELETE_RESOURCE'
 
 export interface Props {
@@ -126,7 +125,7 @@ const ResourceCard: React.FC<Props> = (props) => {
                 <h2 className="font-bold text-left min-w-0 truncate text-xl w-full h-full ml-4 leading-10 text-white">{props.title}</h2>
                 <div className="cardActions flex justify-center items-center w-20 h-10">
                     <button
-                        className="addResourceBtn flex hover:bg-gray-700 border-none outline-none cursor-pointer w-20 h-7 mr-1 rounded-sm justify-evenly items-center bg-transparent"
+                        className="addResourceBtn flex hover:bg-gray-700 border-none outline-none cursor-pointer w-20 h-8 mr-1 rounded-sm justify-evenly items-center bg-transparent"
                         onClick={handleAdd}>
                         <a>Add</a>
                         <AddResourceIcon/>
