@@ -23,7 +23,7 @@ function App() {
                 <Pearlogo/>
             </div>
             <div className="mainView flex flex-col flex-shrink h-full w-full">
-                <div className="header flex flex-row flex-shrink items-start h-11 w-full">
+                <div className="header flex flex-row flex-shrink justify-start h-11 w-full">
                     <TimeZoneClock/>
                 </div>
 

@@ -11,6 +11,7 @@ import ResourceModel from "../../store/ResourceModel";
 export interface Props {
   active: number
   resource: ResourceModel
+  index: number
   tab: number
   card: number
   showMenu: boolean
@@ -85,15 +86,23 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
 
 
   useEffect(() => {
+
+
+
     setTimeout(() => {
       let parent = document.getElementById('editResourceForm')
       let element = document.getElementById('resourceTitleInput')
 
       if (element instanceof HTMLInputElement) {
-        parent!.scrollIntoView()
+        if(props.index > 18) {
+          parent!.scrollIntoView()
+        }
+
         element.focus()
       }
     }, 25)
+
+
 
     return function cleanup() {
 
@@ -101,14 +110,19 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
   }, [showEdit])
 
   useEffect(() => {
+
+    if (props.resource.id > 20) {
     setTimeout(() => {
       let element = document.getElementById('resourceActionMenu')
 
       if (element instanceof HTMLInputElement) {
-        element!.scrollIntoView()
+        if(props.index > 18) {
+          element!.scrollIntoView()
+        }
 
       }
     }, 905)
+    }
 
     return function cleanup() {
 
@@ -121,24 +135,24 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
     <React.Fragment>
         <div
           data-testid="CandyBarWrapper "
-          className="candyBarWrapper flex flex-row flex-shrink h-9 w-full rounded-sm mt-1 mr-0 mb-1 ml-0"
+          className="candyBarWrapper flex flex-row flex-shrink h-8 w-full rounded-sm mt-1 mr-0 mb-1 ml-0"
         >
           <div className="flex items-center justify-between h-full w-full pr-0.5">
-            <div data-testid="CandyBarInfo" className="candyBarInfo flex min-w-0 rounded-sm flex-grow">
+            <div data-testid="CandyBarInfo" className="candyBarInfo flex h-9 m-0.5 items-center min-w-0 rounded-sm flex-grow">
               <a
-                className="candyBarTargetLink hover:bg-gray-800 flex min-w-0 rounded-sm items-center h-full"
+                className="candyBarTargetLink  flex min-w-0 rounded-sm items-center h-5"
                 href={props.resource.url}
                 target={'_blank'}
                 title={props.resource.title}
               >
-                <div className="candyBarInfocon ">
+                <div className="candyBarInfocon flex justify-center items-center min-w-min h-5 mr-1.5 ml-1">
                   <GlobeIcon status={props.resource.status === 200} />
                 </div>
                 <h2 className="truncate text-white font-bold w-56">{props.resource.title}</h2>
               </a>
             </div>
 
-            <div className="candyBarMenu rounded-sm flex items-center flex-grow-0 flex-shrink-0">
+            <div className="candyBarMenu rounded-sm flex items-cent er flex-grow-0 flex-shrink-0">
               <div className="relative inline-block text-left">
                 <div>
                   <button
@@ -176,7 +190,7 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
                     <ClickAwayListener onClickAway={handleClickAway}>
                       <div
                         id={'resourceActionMenu'}
-                        className="resourceActionMenu origin-left absolute z-50 right-0 mt-2 w-56 rounded-sm shadow-lg bg-black ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none"
+                        className="resourceActionMenu origin-left absolute z-50 right-0 mt-2 w-18 rounded-sm shadow-lg bg-black ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none"
                         role="menu"
                         aria-orientation="vertical"
                         aria-labelledby="options-menu"
@@ -208,7 +222,7 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
           </div>
         </div>
       {showEdit &&
-            <div id={'editResourceForm'} className="resourceForm editResource mb-2 mt-2">
+            <div id={'editResourceForm'} className="rounded-sm editResource w-full mb-2 mt-0 p-1">
               <div className={'editResourceForm'}>
                 <input
                     id="resourceTitleInput"

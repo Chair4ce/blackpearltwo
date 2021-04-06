@@ -144,7 +144,7 @@ const ResourceCard: React.FC<Props> = (props) => {
                 leaveTo="transform opacity-0 scale-95"
             >
                 {(ref) => (
-                    <div className="resourceForm addResource ">
+                    <div className="resourceForm addResource flex flex-col flex-shrink rounded-sm p-0.5 ">
                         <div id={'addForm'} className={'addResourceForm'}>
                             <input
                                 id="resourceTitleInput"
@@ -183,10 +183,11 @@ const ResourceCard: React.FC<Props> = (props) => {
                             .sort((a, b) => {
                                 return b.id - a.id
                             })
-                            .map((resource: ResourceModel) => (
+                            .map((resource: ResourceModel, index: number) => (
                                 <ResourceCandyBar
                                     key={resource.id}
                                     resource={resource}
+                                    index={index}
                                     tab={props.tab}
                                     card={props.card}
                                     active={showMenu}
