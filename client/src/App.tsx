@@ -1,14 +1,12 @@
-import React from 'react'
-import ResourceCard from './component/resourceCard/resourceCard'
-import classNames from 'classnames'
-import Pearlogo from "./icons/Pearl";
+import React from "react";
+import ResourceCard from "./component/resourceCard/resourceCard";
+import classNames from "classnames";
 import TimeZoneClock from "./component/timeZoneClock/TimeZoneClock";
-import DrawerIcon from "./icons/DrawerIcon";
 import ResourceModel from "./store/ResourceModel";
-import {useQuery} from "@apollo/client";
-import {FETCH_RESOURCES} from "./store/site/Queries/FETCH_RESOURCES";
+import { useQuery } from "@apollo/client";
+import { FETCH_RESOURCES } from "./store/site/Queries/FETCH_RESOURCES";
 import MenuBtn from "./icons/menuBtn";
-
+import { DragDropContext } from 'react-beautiful-dnd';
 
 export interface ResourceData {
     resources: ResourceModel[]
@@ -16,6 +14,9 @@ export interface ResourceData {
 
 function App() {
     const {loading, error, data} = useQuery<ResourceData>(FETCH_RESOURCES)
+
+
+
 
     const menuBtn =
         document.querySelector(".menu-btn");
