@@ -15,9 +15,7 @@ public class Resource {
     @GeneratedValue(strategy = GenerationType.AUTO)
 
     private Long id;
-
     private String title;
-
     private String url;
 
     private int status;
@@ -25,7 +23,6 @@ public class Resource {
     private int card;
     private int clickies;
     private int pos;
-
 
     public Resource(Long id, String title, String url, int status, int tab, int card, int clickies, int pos) {
         this.id = id;

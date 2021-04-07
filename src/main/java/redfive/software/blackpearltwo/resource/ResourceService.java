@@ -16,7 +16,9 @@ import redfive.software.blackpearltwo.linkPreview.LinkRepository;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -80,18 +82,28 @@ public class ResourceService {
         throw new javassist.NotFoundException("No site to update!");
     }
 
-    public Resource editResourceCard(Long id, int card, int pos) throws javassist.NotFoundException {
+    public Resource editResourceCard(Long id, int card, int pos) {
+        Resource editingResource = resourceRepository.findById(id).orElseThrow(RuntimeException::new);
+        int toCardCount = resourceRepository.countAllByCard(card);
 
-        if (resourceRepository.findById(id).isPresent()) {
-            int DestinationCardCount = resourceRepository.countAllByCard(card);
-            Resource editingResource = resourceRepository.findById(id).orElseThrow(RuntimeException::new);
+        if (toCardCount > 0) {
+            List<Resource> toCardResources = resourceRepository.findAllByCardAndPos(card).stream().sorted(Comparator.comparingInt(Resource::getPos)).collect(Collectors.toList()); ;
 
+            toCardResources.add(pos - 1, editingResource);
 
+            int newPos = 1;
 
+            for (Resource toCardResource : toCardResources) {
+                toCardResource.setPos(newPos++);
+            }
+                resourceRepository.saveAll(toCardResources);
+            } else {
+
+            editingResource.setPos(1);
             resourceRepository.save(editingResource);
-            return editingResource;
         }
-        throw new javassist.NotFoundException("No site to update!");
+            return editingResource;
+
     }
 
     public boolean deleteResource(Long id) {
