@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client'
 
 export const EDIT_RESOURCE_CARD = gql`
-  mutation editResourceCard($id: Int!, $card: Int! ) {
-    editResourceCard(id: $id, card: $card) {
+  mutation editResourceCard($id: Int!, $card: Int!, $pos: Int! ) {
+    editResourceCard(id: $id, card: $card, pos: $pos) {
       id
       title
       url
@@ -10,6 +10,7 @@ export const EDIT_RESOURCE_CARD = gql`
       tab
       card
       clickies
+        pos
     }
   }
 `

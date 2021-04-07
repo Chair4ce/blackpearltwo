@@ -148,7 +148,8 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
                 <div className="candyBarInfocon flex justify-center items-center min-w-min h-5 mr-1.5 ml-1">
                   <GlobeIcon status={props.resource.status === 200} />
                 </div>
-                <h2 className="truncate text-white font-bold w-56">{props.resource.title}</h2>
+                <h2 className="truncate text-white font-bold w-56">{props.resource.title} : </h2>
+                {props.resource.pos}
               </a>
             </div>
 

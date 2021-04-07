@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -82,28 +83,57 @@ public class ResourceService {
         throw new javassist.NotFoundException("No site to update!");
     }
 
-    public Resource editResourceCard(Long id, int card, int pos) {
-        Resource editingResource = resourceRepository.findById(id).orElseThrow(RuntimeException::new);
-        int toCardCount = resourceRepository.countAllByCard(card);
+    public Resource editResourceCard(Long id, int toCard, int toIndex) throws javassist.NotFoundException {
 
-        if (toCardCount > 0) {
-            List<Resource> toCardResources = resourceRepository.findAllByCardAndPos(card).stream().sorted(Comparator.comparingInt(Resource::getPos)).collect(Collectors.toList()); ;
+        if (resourceRepository.findById(id).isPresent()) {
+            Resource editingResource = resourceRepository.findById(id).orElseThrow(RuntimeException::new);
+            int fromCard = editingResource.getCard();
+            System.out.println("moving " + editingResource.getTitle() + " from pos: " + editingResource.getPos() + " to pos: " + toIndex + " on card: " + toCard);
+            int toCardCount = resourceRepository.countAllByCard(toCard);
 
-            toCardResources.add(pos - 1, editingResource);
+            if (toCardCount > 0) {
+                List<Resource> toCardResources = getCollect(toCard);
+                System.out.println("Found " + toCardCount + " resources in card: " + toCard);
 
-            int newPos = 1;
+                toCardResources.add(toIndex, editingResource);
 
-            for (Resource toCardResource : toCardResources) {
-                toCardResource.setPos(newPos++);
-            }
+                int newPos = 1;
+
+                for (Resource toCardResource : toCardResources) {
+                    toCardResource.setPos(newPos++);
+                }
                 resourceRepository.saveAll(toCardResources);
             } else {
 
-            editingResource.setPos(1);
-            resourceRepository.save(editingResource);
-        }
-            return editingResource;
+                editingResource.setPos(1);
+                resourceRepository.save(editingResource);
+            }
 
+            editingResource.setCard(toCard);
+            resourceRepository.save(editingResource);
+
+            reorderCard(fromCard);
+
+
+            return editingResource;
+        }
+        throw new javassist.NotFoundException("No site to update!");
+    }
+
+    private void reorderCard(int fromCard) {
+        List<Resource> fromCardResources = getCollect(fromCard);
+
+        int newPos = 1;
+
+        for (Resource toCardResource : fromCardResources) {
+            toCardResource.setPos(newPos++);
+        }
+        resourceRepository.saveAll(fromCardResources);
+    }
+
+    @NotNull
+    private List<Resource> getCollect(int fromCard) {
+        return resourceRepository.findAllByCard(fromCard).stream().sorted(Comparator.comparingInt(Resource::getPos)).collect(Collectors.toList());
     }
 
     public boolean deleteResource(Long id) {

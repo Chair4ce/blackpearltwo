@@ -9,6 +9,8 @@ export const FETCH_RESOURCES = gql`
       status
       tab
       card
+        clickies
+        pos
     }
   }
 `

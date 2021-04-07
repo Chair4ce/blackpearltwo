@@ -5,15 +5,17 @@ export default class ResourceModel {
   private _status: number
   private _tab: number
   private _card: number
+  private _pos: number
 
 
-  constructor(id: number, title: string, url: string, status: number, tab: number, card: number) {
+  constructor(id: number, title: string, url: string, status: number, tab: number, card: number, pos: number) {
     this._id = id;
     this._title = title;
     this._url = url;
     this._status = status;
     this._tab = tab;
     this._card = card;
+    this._pos = pos;
   }
 
   get id(): number {
@@ -63,5 +65,14 @@ export default class ResourceModel {
 
   set card(value: number) {
     this._card = value;
+  }
+
+
+  get pos(): number {
+    return this._pos;
+  }
+
+  set pos(value: number) {
+    this._pos = value;
   }
 }

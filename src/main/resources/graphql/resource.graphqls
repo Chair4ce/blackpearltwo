@@ -5,8 +5,8 @@ type Resource {
   status: Int
   tab: Int!
   card: Int!
-  pos: Int!
   clickies: Int!
+  pos: Int!
 }
 
 
@@ -17,7 +17,7 @@ type Query {
 }
 
 type Mutation {
-  createResource(title: String!, url: String!, tab: Int!, card: Int!, pos: Int!): [Resource]!
+  createResource(title: String!, url: String!, tab: Int!, card: Int!): [Resource]!
   updateResource(id: Int!, title: String!, url: String!, tab: Int!, card: Int!): Resource!
   editResourceCard(id: Int!, card: Int!, pos: Int!): Resource!
   deleteResource(id: Int!): Boolean

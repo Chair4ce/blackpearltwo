@@ -9,6 +9,6 @@ import java.util.List;
 public interface ResourceRepository extends JpaRepository<Resource, Long> {
 
     int countAllByCard( int cardId);
-    List<Resource> findAllByCardAndPos(int card);
+    List<Resource> findAllByCard(int card);
 
 }

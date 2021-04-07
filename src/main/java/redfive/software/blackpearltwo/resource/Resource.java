@@ -35,6 +35,12 @@ public class Resource {
         this.pos = pos;
     }
 
+    public Resource(Long id, int card, int pos) {
+        this.id = id;
+        this.card = card;
+        this.pos = pos;
+    }
+
     public Resource(String title, String url, int status, int tab, int card, int clickies) {
         this.title = title;
         this.url = url;
@@ -57,4 +63,5 @@ public class Resource {
         this.tab = tab;
         this.card = card;
     }
+
 }

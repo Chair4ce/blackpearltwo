@@ -1,5 +1,5 @@
 mutation {
-    createResource(title: "Facebook", url: "facebook.com", tab: 0, card: 0){
+    createResource(title: "Facebook", url: "facebook.com", tab: 0, card: 0, pos: 1){
         title
         url
         status
