@@ -16,9 +16,6 @@ export interface ResourceData {
 function App() {
   const { loading, error, data } = useQuery<ResourceData>(FETCH_RESOURCES);
 
-  const [dragSource, setDragSource] = useState(-1);
-
-
   const [editResourceCard, {loading: loadingEdit}] = useMutation(EDIT_RESOURCE_CARD, {
 
     refetchQueries: [
@@ -73,13 +70,6 @@ function App() {
     }
   }
 
-function dragStart(r: DragStart) {
-
-    if(r) {
-    setDragSource(r.source.index)
-    }
-}
-
    function dragEnd(r: DropResult) {
     if (r.destination?.droppableId) {
 
@@ -92,7 +82,6 @@ function dragStart(r: DragStart) {
 
         });
       }
-     setDragSource(-1)
   }
 
 
@@ -113,7 +102,7 @@ function dragStart(r: DragStart) {
             <h3 className="text-white ">FMV</h3>
           </div>
 
-          <DragDropContext onDragStart={(r) => dragStart(r)} onDragEnd={(r) => dragEnd(r)}>
+          <DragDropContext onDragEnd={(r) => dragEnd(r)}>
             <div className="resourceColumns flex flex-row flex-shrink flex-grow p-1">
 
 
