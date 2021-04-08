@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ResourceCard from "./component/resourceCard/resourceCard";
 import classNames from "classnames";
 import TimeZoneClock from "./component/timeZoneClock/TimeZoneClock";
@@ -16,7 +16,11 @@ export interface ResourceData {
 function App() {
   const { loading, error, data } = useQuery<ResourceData>(FETCH_RESOURCES);
 
-  const [editResourceCard] = useMutation(EDIT_RESOURCE_CARD, {
+  const [dragSource, setDragSource] = useState(-1);
+
+
+  const [editResourceCard, {loading: loadingEdit}] = useMutation(EDIT_RESOURCE_CARD, {
+
     refetchQueries: [
       {
         query: FETCH_RESOURCES
@@ -69,14 +73,18 @@ function App() {
     }
   }
 
+function dragStart(r: DragStart) {
 
+    if(r) {
+    setDragSource(r.source.index)
+    }
+}
 
    function dragEnd(r: DropResult) {
     if (r.destination?.droppableId) {
-      let newPos = r.destination.index + 1;
 
-
-      editResourceCard({ variables: { id: r.draggableId, card: r.destination?.droppableId, pos: newPos } })
+      let newPos = r.destination.index ;
+      editResourceCard({ variables: { id: r.draggableId, card: r.destination?.droppableId, pos: newPos + 1 } })
         .then(({ data }) => {
           console.log(data);
         })
@@ -84,7 +92,9 @@ function App() {
 
         });
       }
+     setDragSource(-1)
   }
+
 
   return (
     <div data-testid="App" className={classNames("app flex")}>
@@ -103,26 +113,26 @@ function App() {
             <h3 className="text-white ">FMV</h3>
           </div>
 
-          <DragDropContext onDragEnd={(r) => dragEnd(r)}>
+          <DragDropContext onDragStart={(r) => dragStart(r)} onDragEnd={(r) => dragEnd(r)}>
             <div className="resourceColumns flex flex-row flex-shrink flex-grow p-1">
 
 
               <div
                 className="resourceColumn flex flex-col flex-shrink flex-grow justify-start cursor-pointer rounded-sm overflow-y-hidden mr-1 p-0.5">
-                <ResourceCard title="Main" data={data?.resources.filter((m: ResourceModel) => m.card === 0)}
-                              tab={0} card={0} />
+                <ResourceCard title="Main" data={data?.resources}
+                              tab={0} card={0} loading={loadingEdit} />
               </div>
               <div
                 className="resourceColumn flex flex-col flex-shrink flex-grow justify-start cursor-pointer rounded-sm overflow-y-hidden mr-1 p-0.5">
                 <ResourceCard title="Situation Awareness"
-                              data={data?.resources.filter((m: ResourceModel) => m.card === 1)} tab={0}
-                              card={1} />
+                              data={data?.resources} tab={0}
+                              card={1} loading={loadingEdit} />
               </div>
               <div
                 className="resourceColumn flex flex-col flex-shrink flex-grow justify-start cursor-pointer rounded-sm overflow-y-hidden mr-1 p-0.5">
                 <ResourceCard title="Target Research"
-                              data={data?.resources.filter((m: ResourceModel) => m.card === 2)} tab={0}
-                              card={2} />
+                              data={data?.resources} tab={0}
+                              card={2} loading={loadingEdit} />
               </div>
 
 

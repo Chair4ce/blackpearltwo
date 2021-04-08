@@ -55,7 +55,6 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
   }
 
   const handleSubmit = () => {
-    console.log('submitting')
     if (resource.url.startsWith('http')) {
       updateResource({ variables: { id: props.resource.id, title: resource.title, url: resource.url, tab: props.tab, card: props.card } })
         .then(({ data }) => {
@@ -84,10 +83,7 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
     props.callback(-1, true)
   }
 
-
   useEffect(() => {
-
-
 
     setTimeout(() => {
       let parent = document.getElementById('editResourceForm')
@@ -101,8 +97,6 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
         element.focus()
       }
     }, 25)
-
-
 
     return function cleanup() {
 
@@ -132,7 +126,7 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
 
 
   return (
-    <React.Fragment>
+    <>
         <div
           data-testid="CandyBarWrapper "
           className="candyBarWrapper flex flex-row flex-shrink h-8 w-full rounded-sm mt-1 mr-0 mb-1 ml-0"
@@ -148,8 +142,7 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
                 <div className="candyBarInfocon flex justify-center items-center min-w-min h-5 mr-1.5 ml-1">
                   <GlobeIcon status={props.resource.status === 200} />
                 </div>
-                <h2 className="truncate text-white font-bold w-56">{props.resource.title} : </h2>
-                {props.resource.pos}
+                <h2 className="truncate text-white font-bold w-56">{props.resource.title}</h2>
               </a>
             </div>
 
@@ -253,7 +246,7 @@ const ResourceCandyBar: React.FC<Props> = (props) => {
             </div>
         }
 
-    </React.Fragment>
+    </>
   )
 }
 

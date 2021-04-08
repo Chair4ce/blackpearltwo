@@ -10,16 +10,29 @@ import { Transition } from "@headlessui/react";
 import { DELETE_RESOURCE } from "../../store/site/Mutations/DELETE_RESOURCE";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 
+import ContentLoader from "react-content-loader";
+
+const MyLoader = () => (
+  <ContentLoader animate={true}     speed={1}
+                 backgroundColor={'#333'}
+                 foregroundColor={'#999'} opacity={0.3}>
+    <rect x="2" y="10" rx="4" ry="4" width="392" height="26"  />
+    <rect x="2" y="44" rx="4" ry="4" width="392" height="26" />
+    <rect x="2" y="78" rx="4" ry="4" width="392" height="26" />
+    <rect x="2" y="112" rx="4" ry="4" width="392" height="26" />
+  </ContentLoader>
+);
+
 export interface Props {
   title: string
   tab: number
   card: number
   data: ResourceModel[] | undefined
+  loading: boolean
   className?: string
 }
 
 const ResourceCard: React.FC<Props> = (props) => {
-  let textInput: { focus: () => void } | null = null;
   const [showAdd, toggleAdd] = useState(false);
 
   const [showMenu, setMenuVisibility] = useState(-1);
@@ -98,7 +111,7 @@ const ResourceCard: React.FC<Props> = (props) => {
 
   const handleSubmit = () => {
     if (resource.url.startsWith("http")) {
-      createResource({ variables: { title: resource.title, url: resource.url, tab: props.tab, card: props.card } })
+      createResource({ variables: { title: resource.title, url: resource.url, tab: props.tab, card: props.card} })
         .then(({ data }) => {
           // console.log(data)
         })
@@ -109,6 +122,7 @@ const ResourceCard: React.FC<Props> = (props) => {
       toggleAdd((prev) => !prev);
     }
   };
+
   const handleChangeValue = (event: ChangeEvent<any>) => {
     const { name, value } = event.target;
     setResource({ [name]: value });
@@ -119,7 +133,6 @@ const ResourceCard: React.FC<Props> = (props) => {
       handleSubmit();
     }
   };
-
 
   return (
 
@@ -184,12 +197,10 @@ const ResourceCard: React.FC<Props> = (props) => {
             </Transition>
 
             {/*<Scrollbar className="w-full h-full">*/}
-
-
             <div {...provided.droppableProps} ref={provided.innerRef}
-                 className="flex flex-col flex-shrink flex-grow h-screen w-full resources pl-0.3">
-              {props.data
-                ? props.data
+                                    className="flex flex-col flex-shrink flex-grow h-screen w-full resources pl-0.3">
+              {(props.data && !props.loading)
+                ? props.data.filter((m: ResourceModel) => m.card === props.card)
                   .slice()
                   .sort((a, b) => {
                     return a.pos - b.pos;
@@ -214,9 +225,10 @@ const ResourceCard: React.FC<Props> = (props) => {
                       }}
                     </Draggable>
                   )
-                : null}
+                : <MyLoader />}
               {provided.placeholder}
             </div>
+
             {/*</Scrollbar>*/}
           </div>
         );

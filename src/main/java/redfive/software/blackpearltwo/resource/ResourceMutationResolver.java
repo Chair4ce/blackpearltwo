@@ -12,7 +12,7 @@ public class ResourceMutationResolver implements GraphQLMutationResolver {
 
     private final ResourceService resourceService;
 
-    public Iterable<Resource> createResource(String title, String url, int tab, int card) {
+    public Resource createResource(String title, String url, int tab, int card) {
         return resourceService.createResource(title, url, tab, card );
     }
 

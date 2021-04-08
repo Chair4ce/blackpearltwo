@@ -37,18 +37,25 @@ public class ResourceService {
         return resourceRepository.findAll();
     }
 
-    public Iterable<Resource> createResource(String title, String url, int tab, int card) {
+    public Resource createResource(String title, String url, int tab, int card) {
         Resource resource = new Resource(title, url, tab, card);
         int resources = resourceRepository.countAllByCard(card);
+        int toCardCount = resourceRepository.countAllByCard(card);
+        if (toCardCount > 0) {
+            List<Resource> newlyOrderedResources = addResourceAndReOrder(card, 1, resource);
+            resourceRepository.saveAll(newlyOrderedResources);
+        } else {
+            resource.setPos(1);
+            resourceRepository.save(resource);
+        }
 
         Link preview = getLinkPreviewInfo(url);
         if (preview != null) {
             resource.setStatus(preview.getStatus());
             linkRepository.save(preview);
         }
-        resource.setPos(resources + 1);
-        resourceRepository.save(resource);
-        return resourceRepository.findAll();
+
+        return resource;
     }
 
     public void generatePreviews() {
@@ -86,54 +93,65 @@ public class ResourceService {
     public Resource editResourceCard(Long id, int toCard, int toIndex) throws javassist.NotFoundException {
 
         if (resourceRepository.findById(id).isPresent()) {
-            Resource editingResource = resourceRepository.findById(id).orElseThrow(RuntimeException::new);
-            int fromCard = editingResource.getCard();
-            System.out.println("moving " + editingResource.getTitle() + " from pos: " + editingResource.getPos() + " to pos: " + toIndex + " on card: " + toCard);
+            Resource newResource = resourceRepository.findById(id).orElseThrow(RuntimeException::new);
+            int fromCard = newResource.getCard();
+            Thread cleanUp = new Thread(() -> {
+                reorderCard(fromCard);
+            });
+
             int toCardCount = resourceRepository.countAllByCard(toCard);
 
             if (toCardCount > 0) {
-                List<Resource> toCardResources = getCollect(toCard);
-                System.out.println("Found " + toCardCount + " resources in card: " + toCard);
-
-                toCardResources.add(toIndex, editingResource);
-
-                int newPos = 1;
-
-                for (Resource toCardResource : toCardResources) {
-                    toCardResource.setPos(newPos++);
-                }
-                resourceRepository.saveAll(toCardResources);
+                List<Resource> newlyOrderedResources = addResourceAndReOrder(toCard, toIndex, newResource);
+                resourceRepository.saveAll(newlyOrderedResources);
             } else {
-
-                editingResource.setPos(1);
-                resourceRepository.save(editingResource);
+                newResource.setPos(1);
+                resourceRepository.save(newResource);
             }
 
-            editingResource.setCard(toCard);
-            resourceRepository.save(editingResource);
-
-            reorderCard(fromCard);
-
-
-            return editingResource;
+            cleanUp.start();
+            return newResource;
         }
         throw new javassist.NotFoundException("No site to update!");
     }
 
-    private void reorderCard(int fromCard) {
-        List<Resource> fromCardResources = getCollect(fromCard);
+    @NotNull
+    private List<Resource> addResourceAndReOrder(int toCard, int toIndex, Resource editingResource) {
+
+
+        List<Resource> toCardResources = getResourcesFromCard(toCard);
+
+        if (toCard == editingResource.getCard()) {
+            toCardResources.remove(editingResource);
+            editingResource.setCard(toCard);
+            toCardResources.add(toIndex - 1, editingResource);
+        } else {
+            editingResource.setCard(toCard);
+            toCardResources.add(toIndex - 1, editingResource);
+        }
 
         int newPos = 1;
 
-        for (Resource toCardResource : fromCardResources) {
+        for (Resource toCardResource : toCardResources) {
             toCardResource.setPos(newPos++);
         }
-        resourceRepository.saveAll(fromCardResources);
+        return toCardResources;
+    }
+
+    private void reorderCard(int cardId) {
+        List<Resource> cardResources = getResourcesFromCard(cardId);
+
+        int newPos = 1;
+
+        for (Resource resource : cardResources) {
+            resource.setPos(newPos++);
+        }
+        resourceRepository.saveAll(cardResources);
     }
 
     @NotNull
-    private List<Resource> getCollect(int fromCard) {
-        return resourceRepository.findAllByCard(fromCard).stream().sorted(Comparator.comparingInt(Resource::getPos)).collect(Collectors.toList());
+    private List<Resource> getResourcesFromCard(int cardId) {
+        return resourceRepository.findAllByCard(cardId).stream().sorted(Comparator.comparingInt(Resource::getPos)).collect(Collectors.toList());
     }
 
     public boolean deleteResource(Long id) {

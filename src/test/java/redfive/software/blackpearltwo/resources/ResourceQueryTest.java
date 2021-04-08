@@ -42,7 +42,7 @@ public class ResourceQueryTest extends BaseIntegrationTest {
 
     @Test
     public void createResource() throws IOException {
-        Iterable<Resource> resource = Arrays.asList(new Resource(1L, "Facebook", "facebook.com", 200,0,1, 21,1), new Resource(2L, "Facebook", "facebook.com", 200,0,1, 21,1));
+        Resource resource = new Resource(1L, "Facebook", "facebook.com", 200,0,1, 21,1);
         when(resourceServiceMock.createResource(any(), any(), any(),any())).thenReturn(resource);
         GraphQLResponse response = graphQLTestTemplate.postForResource("graphql/create-resource.graphql");
         assertTrue(response.isOk());

@@ -1,9 +1,11 @@
 mutation {
-    createResource(title: "Facebook", url: "facebook.com", tab: 0, card: 0, pos: 1){
+    createResource(title: "Facebook", url: "facebook.com", tab: 0, card: 0){
         title
         url
         status
         tab
         card
+        clickies
+        pos
     }
 }
