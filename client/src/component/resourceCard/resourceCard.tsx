@@ -9,13 +9,12 @@ import AddResourceIcon from "../../icons/AddResource";
 import { Transition } from "@headlessui/react";
 import { DELETE_RESOURCE } from "../../store/site/Mutations/DELETE_RESOURCE";
 import { Draggable, Droppable } from "react-beautiful-dnd";
-
 import ContentLoader from "react-content-loader";
 
 const MyLoader = () => (
   <ContentLoader animate={true}     speed={1}
                  backgroundColor={'#333'}
-                 foregroundColor={'#999'} opacity={0.3}>
+                 foregroundColor={'#999'} opacity={0.2}>
     <rect x="2" y="10" rx="4" ry="4" width="392" height="26"  />
     <rect x="2" y="44" rx="4" ry="4" width="392" height="26" />
     <rect x="2" y="78" rx="4" ry="4" width="392" height="26" />
@@ -33,9 +32,12 @@ export interface Props {
 }
 
 const ResourceCard: React.FC<Props> = (props) => {
+
   const [showAdd, toggleAdd] = useState(false);
 
   const [showMenu, setMenuVisibility] = useState(-1);
+
+
 
   const handleMenuClick = (index: number, reset?: boolean, action?: string) => {
     if (!reset) {
@@ -195,11 +197,9 @@ const ResourceCard: React.FC<Props> = (props) => {
                 </div>
               )}
             </Transition>
-
-            {/*<Scrollbar className="w-full h-full">*/}
             <div {...provided.droppableProps} ref={provided.innerRef}
                                     className="flex flex-col flex-shrink flex-grow h-screen w-full resources pl-0.3">
-              {(props.data && !props.loading)
+              {(!props.loading && props.data)
                 ? props.data.filter((m: ResourceModel) => m.card === props.card)
                   .slice()
                   .sort((a, b) => {
@@ -228,8 +228,6 @@ const ResourceCard: React.FC<Props> = (props) => {
                 : <MyLoader />}
               {provided.placeholder}
             </div>
-
-            {/*</Scrollbar>*/}
           </div>
         );
       }
