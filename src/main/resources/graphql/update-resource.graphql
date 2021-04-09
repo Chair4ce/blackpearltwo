@@ -1,5 +1,5 @@
 mutation {
-    updateResource(id: 1, title: "Instagram", url: "facebook.com", tab: 0, card: 0, pos: 1){
+    updateResource(id: 1, title: "Instagram", url: "facebook.com", tab: 0, card: 0){
         id
         title
         url

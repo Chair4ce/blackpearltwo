@@ -37,6 +37,16 @@ const ResourceCard: React.FC<Props> = (props) => {
 
   const [showMenu, setMenuVisibility] = useState(-1);
 
+  const [resources, setResources] = useState([] as ResourceModel[] | undefined);
+
+  useEffect(() => {
+    !props.loading && setResources(props.data?.slice()
+      .sort((a: ResourceModel, b: ResourceModel) => {
+        return a.pos - b.pos;
+      }));
+  }, [props.data]);
+
+
 
 
   const handleMenuClick = (index: number, reset?: boolean, action?: string) => {
@@ -144,7 +154,7 @@ const ResourceCard: React.FC<Props> = (props) => {
           <div data-testid="ResourceCard"
                id={"cardId_" + props.card}
                className="resourceCard flex flex-col flex-shrink flex-grow flex-grow h-screen ">
-            <div className="resourceColumnHeader flex flex-row w-full sticky h-10 rounded-sm">
+            <div className="resourceColumnHeader flex flex-row w-full sticky z-0 h-10 rounded-sm">
               <h2
                 className="font-bold text-left min-w-0 truncate text-xl w-full h-full ml-4 leading-10 text-white">{props.title}</h2>
               <div className="cardActions flex justify-center items-center w-20 h-10">
@@ -183,7 +193,7 @@ const ResourceCard: React.FC<Props> = (props) => {
                       placeholder="url"
                       onKeyDown={(e) => handleKeyDown(e)}
                       onChange={(e) => handleChangeValue(e)}
-                      className="textInput border app w-full  p-2 h-full max-h-80 focus:outline-none rounded-sm"
+                      className="textInput border app w-full p-2 h-full max-h-80 focus:outline-none rounded-sm"
                     ></textarea>
                   </div>
                   <div className="resourceFormBtn flex w-full items-center h-10 mt-1">
@@ -200,12 +210,7 @@ const ResourceCard: React.FC<Props> = (props) => {
             <div {...provided.droppableProps} ref={provided.innerRef}
                                     className="flex flex-col flex-shrink flex-grow h-screen w-full resources pl-0.3">
               {(!props.loading && props.data)
-                ? props.data.filter((m: ResourceModel) => m.card === props.card)
-                  .slice()
-                  .sort((a, b) => {
-                    return a.pos - b.pos;
-                  })
-                  .map((resource: ResourceModel, index: number) =>
+                ? resources?.map((resource: ResourceModel, index: number) =>
                     <Draggable key={resource.id} draggableId={resource.id.toString()} index={index}>
                       {(provided) => {
                         return (

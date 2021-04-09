@@ -13,6 +13,6 @@ function renderMainView() {
 }
 test('renders app', async () => {
   const { findByTestId } = renderMainView()
-  const app = await findByTestId('app')
+  const app = await findByTestId('App')
   expect(app).toBeTruthy()
 })

@@ -8,6 +8,7 @@ body {
     'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background: #2F343B;
 }
 
 code {
@@ -16,30 +17,58 @@ code {
 
 #root {
     background: #2F343B;
-    height: calc(100vh - 20px);
+    height: 100vh;
+    width: 100vw;
 }
 
 .app {
+    height: calc(100vh - 10px);;
+    width: calc(100vw - 30px);;
+}
+
+.timeZoneClock {
+    width: 675px;
 }
 
 .widgetDrawer {
-    height: 892px;
+    height: calc(100vh - 2px);
     width: 60px;
     z-index: 1000;
     /*background: linear-gradient(90deg, rgba(27, 27, 30, 0.99) 0%, rgba(27, 27, 30, 0.25) 100%);*/
-    background: #2f2f2f;
+    background: #1B1B1E;
     -webkit-box-shadow: 9px 0px 5px -2px rgba(0,0,0,0.22);
     -moz-box-shadow: 9px 0px 5px -2px rgba(0,0,0,0.22);
     box-shadow: 9px 0px 5px -2px rgba(0,0,0,0.22);
 }
 
+.smallPearlogo {
+    left: 17px;
+}
+
 /*//Resource Column*/
 /*---------------------------------------------------------*/
 
+.wCmenuItems {
+    width: 275px;
+    background: #1B1B1E;
+}
 
+.wCmenuItems li {
+    width: 275px;
+    background: #1B1B1E;
+}
+
+
+.wCmenuItems li:hover {
+    background: linear-gradient(90deg, rgb(72, 72, 72) 0%, rgb(27, 27, 30) 100%);
+}
 .candyBarMenuBtn {
     width: 28px;
     height: 26px;
+}
+
+.ScrollbarsCustom-Wrapper {
+    width: 279px;
 }
 
 .candyBarWrapper {
@@ -51,12 +80,12 @@ code {
 }
 
 .candyBarMenuButton {
-    min-width: 28px;
+    min-width: 32px;
 }
 
 .candyBarMenu {
     width: 28px;
-    height: 26px;
+    height: 31px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -68,7 +97,7 @@ code {
 }
 
 .candyBarInfo {
-    height: 26px;
+    height: 32px;
 }
 
 .candyBarInfo:hover {
@@ -92,6 +121,11 @@ code {
     text-shadow: 2px 2px 4px #000000;
 }
 
+.widgetElement {
+
+    background: #373F51;
+}
+
 
 .resourceCard {
     max-height: 808px;
@@ -100,7 +134,6 @@ code {
 
 .pearlogo {
     position: relative;
-    top: 19px;
 }
 
 
@@ -167,6 +200,7 @@ code {
     border: none;
     color: white;
     background: #2f2f2f;
+    width: 100%;
 }
 
 .resourceActionMenu {
@@ -213,7 +247,7 @@ code {
     position: relative;
     z-index: 3;
     right: 15px;
-    top: 15px;
+    top: 10px;
     cursor: pointer;
     transition: all 300ms ease-out;
 }
@@ -223,25 +257,26 @@ code {
     left: 0;
     top: 0;
     min-width: 60px;
-    transition: all 300ms ease-out;
+    transition: all 600ms ease-in-out;
 }
 
 .mainView {
     margin-left: 60px;
 }
 
-.pearlogo {
-    display: none;
-    transition: all 300ms ease-out;
-    transition-delay: 400ms;
-}
+/*.pearlogo {*/
+/*    opacity: 0.0;*/
+/*    display: flex;*/
+/*    transition: opacity 300ms ease-out;*/
+/*    transition-delay: 800ms;*/
+/*}*/
 
-.hidepearlogo {
-    display: flex;
-}
+/*.hidepearlogo {*/
+/*    opacity: 1.0;*/
+/*}*/
 
 .widgetOpened {
-    width: 419px;
+    width: 420px;
 }
 
 /* Styling the hamburger lines */
@@ -250,12 +285,12 @@ code {
     height: 3px;
     margin: 0 0 5px 0;
     background: #ffffff;
-    transition: all 300ms ease-out;
+    transition: all 600ms ease-out;
 }
 
 /* Adding tranform to the X */
 .menu-btn.close {
-    top: 8px;
+   top: 8px;
     transform: rotate(180deg);
 }
 

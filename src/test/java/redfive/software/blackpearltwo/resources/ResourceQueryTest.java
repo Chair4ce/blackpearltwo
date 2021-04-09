@@ -17,6 +17,7 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
 @ActiveProfiles("test")
@@ -43,17 +44,17 @@ public class ResourceQueryTest extends BaseIntegrationTest {
     @Test
     public void createResource() throws IOException {
         Resource resource = new Resource(1L, "Facebook", "facebook.com", 200,0,1, 21,1);
-        when(resourceServiceMock.createResource(any(), any(), any(),any())).thenReturn(resource);
+        when(resourceServiceMock.createResource(any(), any(), anyInt(), anyInt())).thenReturn(resource);
         GraphQLResponse response = graphQLTestTemplate.postForResource("graphql/create-resource.graphql");
         assertTrue(response.isOk());
-        assertEquals("Facebook", response.get("$.data.createResource[0].title"));
-        assertEquals("facebook.com", response.get("$.data.createResource[0].url"));
+        assertEquals("Facebook", response.get("$.data.createResource.title"));
+        assertEquals("facebook.com", response.get("$.data.createResource.url"));
     }
 
     @Test
     public void updateResource() throws IOException, NotFoundException {
         Resource resource = new Resource(1L, "Instagram", "facebook.com", 200,0,1, 21,1);
-        when(resourceServiceMock.updateResource(any(), any(), any(), any(), any())).thenReturn(resource);
+        when(resourceServiceMock.updateResource(any(), any(), any(),  anyInt(), anyInt())).thenReturn(resource);
         GraphQLResponse response = graphQLTestTemplate.postForResource("graphql/update-resource.graphql");
         assertTrue(response.isOk());
         assertEquals("Instagram", response.get("$.data.updateResource.title"));
